@@ -1,0 +1,43 @@
+﻿@model Category
+
+<form method="post" >
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete Category</h2>
+            <hr />
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Name" class="p-0"></label>
+            <input asp-for="Name" class="form-control" value="@Model.Name" readonly />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="DisplayOrder" class="p-0"></label>
+            <input asp-for="DisplayOrder" class="form-control" value="@Model.DisplayOrder" readonly/>
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <p>Are you sure you want to delete this category? </p>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Delete category</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+
