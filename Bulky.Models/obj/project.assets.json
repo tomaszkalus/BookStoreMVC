@@ -6637,9 +6637,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Models\\Bulky.Models.csproj",
-      "projectName": "Bulky.Models",
-      "projectPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Models\\Bulky.Models.csproj",
+      "projectUniqueName": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Models\\BookStoreMVC.Models.csproj",
+      "projectName": "BookStoreMVC.Models",
+      "projectPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Models\\BookStoreMVC.Models.csproj",
       "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Models\\obj\\",
       "projectStyle": "PackageReference",

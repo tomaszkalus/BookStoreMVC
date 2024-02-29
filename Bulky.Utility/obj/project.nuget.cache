@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Lr2XUXpgf92CFaar+ueGX6c/KyhGLNXMFmtVqBSiDYvdmOTepOZTDs6tuQZupAEp7ehQQyquafcGPTbIzm+XeQ==",
+  "dgSpecHash": "mlYf6M40LTvxEJeyEx0n1SVCGcfdyFkiwGy4zo5UIVS44RLgj1ZitKDj0VgkUMoQUIlcQatZPwQoxY8vOpM35w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\Bulky.Utility.csproj",
+  "projectFilePath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\BookStoreMVC.Utility.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

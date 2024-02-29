@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\Bulky.Utility.csproj",
-      "projectName": "Bulky.Utility",
-      "projectPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\Bulky.Utility.csproj",
+      "projectUniqueName": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\BookStoreMVC.Utility.csproj",
+      "projectName": "BookStoreMVC.Utility",
+      "projectPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\BookStoreMVC.Utility.csproj",
       "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\tomas\\source\\repos\\BulkyWeb\\Bulky.Utility\\obj\\",
       "projectStyle": "PackageReference",

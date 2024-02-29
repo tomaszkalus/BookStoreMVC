@@ -1,0 +1,16 @@
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\bin\Debug\net8.0\BookStoreMVC.DataAccess.deps.json
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\bin\Debug\net8.0\BookStoreMVC.DataAccess.dll
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\bin\Debug\net8.0\BookStoreMVC.DataAccess.pdb
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\bin\Debug\net8.0\BookStoreMVC.Models.dll
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\bin\Debug\net8.0\BookStoreMVC.Models.pdb
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.csproj.AssemblyReference.cache
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.AssemblyInfoInputs.cache
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.AssemblyInfo.cs
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.sourcelink.json
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStor.42B784AD.Up2Date
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.dll
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\refint\BookStoreMVC.DataAccess.dll
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.pdb
+C:\Users\tomas\source\repos\BulkyWeb\Bulky.DataAccess\obj\Debug\net8.0\ref\BookStoreMVC.DataAccess.dll
