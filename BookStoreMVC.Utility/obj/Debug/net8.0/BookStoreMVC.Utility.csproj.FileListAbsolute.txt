@@ -1,0 +1,13 @@
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\bin\Debug\net8.0\BookStoreMVC.Utility.deps.json
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\bin\Debug\net8.0\BookStoreMVC.Utility.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\bin\Debug\net8.0\BookStoreMVC.Utility.pdb
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.csproj.AssemblyReference.cache
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.AssemblyInfoInputs.cache
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.AssemblyInfo.cs
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.csproj.CoreCompileInputs.cache
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.sourcelink.json
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\refint\BookStoreMVC.Utility.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\BookStoreMVC.Utility.pdb
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Utility\obj\Debug\net8.0\ref\BookStoreMVC.Utility.dll
