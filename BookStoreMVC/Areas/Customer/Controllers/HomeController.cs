@@ -1,5 +1,7 @@
+using BookStoreMVC.Models.ViewModels;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -20,6 +22,15 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            ViewData["Categories"] = _unitOfWork.Category.GetAll();
+            return View(productList);
+        }
+
+        public IActionResult Category(int id)
+        {
+            Category category = _unitOfWork.Category.GetById(id);
+
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll().Where(product => product.CategoryId == id);
             return View(productList);
         }
 

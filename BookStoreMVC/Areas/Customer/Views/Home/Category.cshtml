@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Product>
 <div class="row pb-3">
-    @foreach(var product in Model)
+    @foreach (var product in Model)
     {
         <div class="col-lg-3 col-sm-6">
             <div class="row p-2">
@@ -29,7 +29,7 @@
                         {
                             <img src="/images/product/no_photo.png" class="card-img-top" />
                         }
-                        
+
                         <div class="card-body pb-0">
                             <div class="pl-1">
                                 <p class="card-title mb-0 text-dark opacity-75 text-uppercase text-center fs-5">@product.Title</p>

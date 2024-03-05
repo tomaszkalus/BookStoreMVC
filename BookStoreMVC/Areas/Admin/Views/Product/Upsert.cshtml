@@ -83,6 +83,22 @@
                             </div>
                         </div>
 
+                        <p>Badges:</p>
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input asp-for="Product.IsNew" class="form-check-input" type="checkbox" id="new-product">
+                                <label asp-for="Product.IsNew" class="form-check-label" for="new-product"></label>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="Product.IsBestseller" class="form-check-input" type="checkbox" id="bestseller">
+                                <label asp-for="Product.IsBestseller"  class="form-check-label" for="bestseller"></label>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="Product.IsSpecialOffer"  class="form-check-input" type="checkbox" id="special-offer">
+                                <label asp-for="Product.IsSpecialOffer" class="form-check-label" for="special-offer"></label>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-6 col-md-3">
                                 @if (Model.Product.Id != 0)
@@ -102,7 +118,6 @@
                             </div>
                         </div>
                     </div>
-                
             </div>
         </form>
     </div>

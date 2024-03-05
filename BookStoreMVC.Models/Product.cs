@@ -48,5 +48,10 @@ namespace Bulky.Models
         [ValidateNever]
         public string? ImageUrl { get; set; }
 
+        public bool IsNew { get; set; }
+        public bool IsBestseller { get; set; }
+        public bool IsSpecialOffer { get; set; }
+
+
     }
 }
