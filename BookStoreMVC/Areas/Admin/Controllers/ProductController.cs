@@ -106,7 +106,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         }
 
-
         #region API_CALLS
         [HttpGet]
         public IActionResult GetAll()

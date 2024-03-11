@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Product>
+
+<div class="row pb-3 mt-3">
+@foreach (var product in Model)
+{
+    <div class="col-lg-3 col-sm-6">
+        <div class="row p-2">
+            <div class="col-12 p-1">
+                <div class="card border-0 p-3 shadow border-top border-5 rounded">
+                    <div class="position-absolute d-flex flex-column ms-2 mt-2">
+                        @if (product.IsNew)
+                        {
+                            <span class="badge text-bg-primary">New</span>
+                        }
+                        @if (product.IsBestseller)
+                        {
+                            <span class="badge text-bg-danger mt-2">Bestseller</span>
+                        }
+                        @if (product.IsSpecialOffer)
+                        {
+                            <span class="badge text-bg-success mt-2 ">Special offer</span>
+                        }
+                    </div>
+
+                    @if (!String.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" />
+                    }
+                    else
+                    {
+                        <img src="/images/product/no_photo.png" class="card-img-top" />
+                    }
+
+                    <div class="card-body pb-0">
+                        <div class="pl-1">
+                            <p class="card-title mb-0 text-dark opacity-75 text-uppercase text-center fs-5">@product.Title</p>
+                            <p class="card-title mb-0 text-secondary text-center fs-6">@product.Author</p>
+                        </div>
+                        <div class="pl-1">
+                            <p class="text-dark text-opacity-75 text-center mb-0">List price: <strong>@product.ListPrice.ToString("c")</strong></p>
+                        </div>
+                        <div class="pl-1">
+                            <p class="text-dark text-opacity-75 text-center fs-6">As low as: <strong>@product.Price100.ToString("c")</strong></p>
+                        </div>
+                    </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="d-flex flex-row">
+                                <button class="btn btn-secondary border-0 form-control w-25 me-1 shopping-cart-btn" data-id="@product.Id"><i class="bi bi-cart"></i></button>
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary border-0 form-control">Details</a>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="d-flex flex-row">
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary border-0 form-control">Details</a>
+                            </div>
+                            
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Hello, world! This is a toast message.
+        </div>
+    </div>
+</div>

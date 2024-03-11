@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Category>
+
+<footer class="py-5 mt-5 border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h5>Categories</h5>
+                <ul class="nav flex-column">
+                    @foreach (var category in Model)
+                    {
+                        <li class="nav-item mb-2"><a asp-controller="Home" asp-action="Category" asp-route-id="@category.Id" class="nav-link p-0 text-muted">@category.Name</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col">
+                <h5>Section</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="row mt-5 d-flex justify-content-center">
+            <span class="text-muted">Tomasz Kalus &copy; 2024</span>
+        </div>
+
+    </div>
+</footer>

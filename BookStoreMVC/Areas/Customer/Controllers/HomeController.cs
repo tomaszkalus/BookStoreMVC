@@ -22,13 +22,18 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
-            ViewData["Categories"] = _unitOfWork.Category.GetAll();
             return View(productList);
         }
 
         public IActionResult Category(int id)
         {
             Category category = _unitOfWork.Category.GetById(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            string categoryname = category.Name;
+            ViewData["CategoryName"] = categoryname;
 
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll().Where(product => product.CategoryId == id);
             return View(productList);
@@ -49,6 +54,12 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult AddToShoppingCart(int productId)
+        {
+            return Json(new { success = true, message = "Adding to cart Successful!" });
         }
     }
 }

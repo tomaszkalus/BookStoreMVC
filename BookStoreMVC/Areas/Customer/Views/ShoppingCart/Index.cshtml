@@ -1,0 +1,24 @@
+﻿@model IEnumerable<UserProductShoppingCart>
+
+<h1>Cart</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="h-25"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></td>
+                <td><a asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Author - @item.Product.Title</a></td>
+                <td><input class="form-control" type="number" value="@item.quantity" min="1" max="1000" /></td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
