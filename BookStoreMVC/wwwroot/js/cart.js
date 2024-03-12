@@ -1,6 +1,7 @@
 ﻿const shoppingCartBtns = document.querySelectorAll('.shopping-cart-btn')
 const shoppingCartItemsAmount = document.querySelector('#cart-amount')
 
+
 shoppingCartBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const productId = parseInt(btn.getAttribute('data-id'))

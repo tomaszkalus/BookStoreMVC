@@ -51,13 +51,16 @@
                         </li>
                     }
 
-                    <li class="nav-item">
-                        <a asp-controller="ShoppingCart" asp-action="Index" class="nav-link text-white position-relative">
-                            <i class="bi bi-cart-fill me-1 text-white"></i>
-                            Cart <span id="cart-amount"></span>
-                        </a>
-                    </li>
-
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="ShoppingCart" asp-action="Index" class="nav-link text-white position-relative">
+                                <i class="bi bi-cart-fill me-1 text-white"></i>
+                                Cart <span id="cart-amount"></span>
+                            </a>
+                        </li>
+                    }
+                    
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
