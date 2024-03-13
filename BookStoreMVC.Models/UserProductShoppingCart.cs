@@ -22,6 +22,7 @@ namespace Bulky.Models
         public ApplicationUser User { get; set; }
         [ForeignKey("productId")]
         public Product Product { get; set; }
+        [NotMapped]
         public double TotalPrice
         {
             get { return Product.ListPrice * quantity; }

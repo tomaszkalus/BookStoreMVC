@@ -1,6 +1,7 @@
 ﻿using BookStoreMVC.Models.JsonModels;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         }
 
+        // API CALLS
 
         [HttpPost]
         public async Task<IActionResult> AddToShoppingCart([FromBody] NewCartItem newCartItem)
@@ -84,7 +86,8 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return Json(new { success = true, cartAmount });
         }
 
-        public async Task<IActionResult> UpdateItemQuantity([FromBody] NewCartItem newCartItem)
+        [HttpPost]
+        public async Task<IActionResult> UpdateItemQuantity([FromBody] CartItem cartItem)
         {
             if (!ModelState.IsValid)
             {
@@ -97,11 +100,11 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 return Json(new { success = false, message = "The user isn't authenticated" });
             }
 
-            UserProductShoppingCart? itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id)
-                .FirstOrDefault(p => p.productId == newCartItem.ProductId);
+            var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id).Single(u => u.productId == cartItem.Id);
 
             if (itemInCart != null)
             {
+                itemInCart.quantity = cartItem.quantity;
                 _unitOfWork.UserProductShoppingCart.Update(itemInCart);
                 _unitOfWork.Save();
                 return Json(new { success = true, message = "The item quantity was updated" });
@@ -109,8 +112,21 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
 
             return Json(new { success = false, message = "The item is not in the cart" });
+        }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> RemoveCartItem(int id)
+        {
 
+            var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(_userManager.GetUserId(User)).Single(u => u.productId == id);
+            if (itemInCart != null)
+            {
+                _unitOfWork.UserProductShoppingCart.Remove(itemInCart);
+                _unitOfWork.Save();
+                return Json(new { success = true, message = "The product has been removed from the cart" });
+            }
+            return Json(new { success = false, message = "There was an error when removing from cart" });
         }
     }
 }
