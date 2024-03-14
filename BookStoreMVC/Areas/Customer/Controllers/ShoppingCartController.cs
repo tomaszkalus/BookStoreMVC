@@ -34,7 +34,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
         // API CALLS
 
         [HttpPost]
-        public async Task<IActionResult> AddToShoppingCart([FromBody] NewCartItem newCartItem)
+        public async Task<IActionResult> AddToShoppingCart([FromBody] ProductDTO newCartItem)
         {
 
             if (!ModelState.IsValid)
@@ -87,7 +87,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateItemQuantity([FromBody] CartItem cartItem)
+        public async Task<IActionResult> UpdateItemQuantity([FromBody] ProductDTO cartItem)
         {
             if (!ModelState.IsValid)
             {
@@ -100,11 +100,11 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 return Json(new { success = false, message = "The user isn't authenticated" });
             }
 
-            var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id).Single(u => u.productId == cartItem.Id);
+            var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id).Single(u => u.productId == cartItem.ProductId);
 
             if (itemInCart != null)
             {
-                itemInCart.quantity = cartItem.quantity;
+                itemInCart.quantity = cartItem.Quantity;
                 _unitOfWork.UserProductShoppingCart.Update(itemInCart);
                 _unitOfWork.Save();
                 return Json(new { success = true, message = "The item quantity was updated" });
@@ -128,5 +128,24 @@ namespace BulkyWeb.Areas.Customer.Controllers
             }
             return Json(new { success = false, message = "There was an error when removing from cart" });
         }
+
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> ItemQuantity(int id)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return StatusCode(401);
+            }
+
+            var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id).Single(u => u.productId == id);
+            if (itemInCart != null)
+            {
+                return Json(new { success = true, quantity = itemInCart.quantity });
+            }
+            return Json(new { success = false, message = "There was an error when getting the quantity" });
+        }
+
+
     }
 }

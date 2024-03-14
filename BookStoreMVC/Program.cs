@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BookStoreMVC.Models;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
 
 builder.Services.AddControllersWithViews();
 

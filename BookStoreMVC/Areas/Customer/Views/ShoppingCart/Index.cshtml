@@ -8,7 +8,7 @@
         <div class="col-10">
             @foreach (var item in Model)
             {
-                <div class="border-bottom row p-2">
+                <div class="border-bottom row p-2" id="cart-item-@item.Product.Id">
                     <div class="col-1"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></div>
                     <div class="col-9 ps-4">
                         <div>
@@ -23,8 +23,8 @@
                     </div>
                     <div class="col-2 d-flex align-items-center flex-column justify-content-center ">
                         <div>
-                            <div>@item.TotalPrice.ToString("c")</div>
-                            <div class="text-muted small">@item.Product.ListPrice.ToString("c") * @item.quantity</div>
+                            <div id="total-price-@item.Product.Id-">@item.TotalPrice.ToString("c")</div>
+                            <div class="text-muted small">@item.Product.ListPrice.ToString("c") * <span id="quantity-@item.Product.Id">@item.quantity</span></div>
                         </div>
                     </div>
                 </div>
@@ -50,3 +50,7 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/cart.js"></script>
+}
