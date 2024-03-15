@@ -1,4 +1,5 @@
-﻿const shoppingCartBtns = document.querySelectorAll('.shopping-cart-btn')
+﻿
+shoppingCartBtns = document.querySelectorAll('.shopping-cart-btn')
 const shoppingCartItemsAmount = document.querySelector('#cart-amount')
 
 shoppingCartBtns.forEach(btn => {
@@ -28,7 +29,6 @@ shoppingCartBtns.forEach(btn => {
                     }
                 }
                 else {
-
                     toast = {
                         title: "Error",
                         message: "There was an error with adding product to cart.",
@@ -50,7 +50,6 @@ function refreshCartProductAmount() {
         }
     })
         .then(res => {
-            console.log(res)
             if (!res.ok) {
                 return;
             }
@@ -60,8 +59,7 @@ function refreshCartProductAmount() {
         .then(data => {
             if (data) {
                 shoppingCartItemsAmount.innerHTML = `(${data.cartAmount})`
-            }
-            
+            }            
         })
 }
 

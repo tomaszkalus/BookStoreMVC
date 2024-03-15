@@ -11,7 +11,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using BookStoreMVC.Models;
-using Bulky.Utility;
+using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
-namespace BulkyWeb.Areas.Identity.Pages.Account
+namespace BookStoreMVC.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

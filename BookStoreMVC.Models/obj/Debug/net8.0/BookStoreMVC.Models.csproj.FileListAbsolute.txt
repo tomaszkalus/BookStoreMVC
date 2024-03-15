@@ -24,3 +24,6 @@ C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\obj\Debug\net8.0\Bo
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\obj\Debug\net8.0\refint\BookStoreMVC.Models.dll
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\obj\Debug\net8.0\BookStoreMVC.Models.pdb
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\obj\Debug\net8.0\ref\BookStoreMVC.Models.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\bin\Debug\net8.0\BookStoreMVC.Utility.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\bin\Debug\net8.0\BookStoreMVC.Utility.pdb
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.Models\obj\Debug\net8.0\BookStor.B9656A21.Up2Date

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Bulky.DataAccess.Migrations
+namespace BookStoreMVC.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddImageUrlToProduct : Migration

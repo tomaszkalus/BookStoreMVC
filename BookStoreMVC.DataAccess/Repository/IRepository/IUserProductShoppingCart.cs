@@ -1,12 +1,12 @@
-﻿using Bulky.Models;
+﻿using BookStoreMVC.Models;
 
-namespace Bulky.DataAccess.Repository.IRepository
+namespace BookStoreMVC.DataAccess.Repository.IRepository
 {
-    public interface IUserProductShoppingCart : IRepository<UserProductShoppingCart>
+    public interface IUserProductShoppingCart : IRepository<ShoppingCartItem>
     {
-        void Update(UserProductShoppingCart userProductShoppingCart);
-        public UserProductShoppingCart? GetById(int id);
-        public IEnumerable<UserProductShoppingCart> GetByUserId(string userId);
+        void Update(ShoppingCartItem userProductShoppingCart);
+        public ShoppingCartItem? GetById(int id);
+        public IEnumerable<ShoppingCartItem> GetByUserId(string userId);
         public IEnumerable<Product> GetUserProducts(string userId);
         public int GetShoppingCartProductsAmount(string userId);
     }

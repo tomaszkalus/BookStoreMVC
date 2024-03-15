@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Bulky.DataAccess.Migrations
+namespace BookStoreMVC.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

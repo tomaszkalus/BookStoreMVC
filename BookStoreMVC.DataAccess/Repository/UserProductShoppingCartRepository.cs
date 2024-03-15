@@ -1,30 +1,25 @@
-﻿using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models;
+﻿using BookStoreMVC.Models;
+using BookStoreMVC.DataAccess.Data;
+using BookStoreMVC.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bulky.DataAccess.Repository
+namespace BookStoreMVC.DataAccess.Repository
 {
-    public class UserProductShoppingCartRepository : Repository<UserProductShoppingCart>, IUserProductShoppingCart
+    public class UserProductShoppingCartRepository : Repository<ShoppingCartItem>, IUserProductShoppingCart
     {
         private ApplicationDbContext _db;
 
         public UserProductShoppingCartRepository(ApplicationDbContext db) : base(db)
         {
-            _db = db;   
+            _db = db;
         }
 
-        public UserProductShoppingCart? GetById(int id)
+        public ShoppingCartItem? GetById(int id)
         {
             return _db.UserProductShoppingCarts.Find(id);
         }
 
-        public IEnumerable<UserProductShoppingCart> GetByUserId(string userId)
+        public IEnumerable<ShoppingCartItem> GetByUserId(string userId)
         {
             return _db.UserProductShoppingCarts.Where(u => u.userId == userId).Include("Product");
         }
@@ -39,7 +34,7 @@ namespace Bulky.DataAccess.Repository
             return _db.UserProductShoppingCarts.Where(u => u.userId == userId).Select(p => p.Product);
         }
 
-        public void Update(UserProductShoppingCart userProductShoppingCart)
+        public void Update(ShoppingCartItem userProductShoppingCart)
         {
             _db.UserProductShoppingCarts.Update(userProductShoppingCart);
         }

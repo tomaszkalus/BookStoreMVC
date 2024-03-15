@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bulky.Models
+namespace BookStoreMVC.Models
 {
     public class Product
     {
@@ -22,7 +17,7 @@ namespace Bulky.Models
         public string? Author { get; set; }
 
         [Required]
-        [Display(Name ="List Price")]
+        [Display(Name = "List Price")]
         [Range(1, 1000)]
         public double ListPrice { get; set; }
 

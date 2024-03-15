@@ -1,13 +1,13 @@
-﻿using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models;
+﻿using BookStoreMVC.DataAccess.Data;
+using BookStoreMVC.DataAccess.Repository.IRepository;
+using BookStoreMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bulky.DataAccess.Repository
+namespace BookStoreMVC.DataAccess.Repository
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {

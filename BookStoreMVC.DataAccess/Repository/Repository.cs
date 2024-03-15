@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository.IRepository;
+﻿using BookStoreMVC.DataAccess.Data;
+using BookStoreMVC.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bulky.DataAccess.Repository
+namespace BookStoreMVC.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -22,7 +17,7 @@ namespace Bulky.DataAccess.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
-            
+
         }
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperties = null)
@@ -44,9 +39,9 @@ namespace Bulky.DataAccess.Repository
         public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if(!string.IsNullOrEmpty(includeProperties))
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach(var includeProp in includeProperties
+                foreach (var includeProp in includeProperties
                     .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
@@ -58,7 +53,7 @@ namespace Bulky.DataAccess.Repository
         //public T GetById(int id)
         //{
         //    IQueryable<T> query = dbSet;
-            
+
         //}
 
         public void Remove(T entity)

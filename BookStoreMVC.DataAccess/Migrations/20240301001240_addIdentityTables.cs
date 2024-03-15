@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Bulky.DataAccess.Migrations
+namespace BookStoreMVC.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class addIdentityTables : Migration

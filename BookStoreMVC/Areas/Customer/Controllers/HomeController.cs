@@ -1,11 +1,9 @@
-using BookStoreMVC.Models.ViewModels;
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models;
-using Bulky.Models.ViewModels;
+using BookStoreMVC.DataAccess.Repository.IRepository;
+using BookStoreMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BulkyWeb.Areas.Customer.Controllers
+namespace BookStoreMVC.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class HomeController : Controller
@@ -28,7 +26,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Category(int id)
         {
             Category category = _unitOfWork.Category.GetById(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
@@ -41,7 +39,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int id)
         {
-            var product = _unitOfWork.Product.Get(u=>u.Id == id, includeProperties: "Category");
+            var product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "Category");
             return View(product);
         }
 

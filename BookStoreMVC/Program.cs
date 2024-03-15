@@ -1,6 +1,6 @@
-using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository;
-using Bulky.DataAccess.Repository.IRepository;
+using BookStoreMVC.DataAccess.Data;
+using BookStoreMVC.DataAccess.Repository;
+using BookStoreMVC.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BookStoreMVC.Utility;
@@ -10,7 +10,7 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("eu-EU");
 
 builder.Services.AddControllersWithViews();
 

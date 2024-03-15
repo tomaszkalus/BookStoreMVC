@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bulky.Models
+namespace BookStoreMVC.Models
 {
-    public class UserProductShoppingCart
+    public class ShoppingCartItem
     {
         [Key]
         public int Id { get; set; }

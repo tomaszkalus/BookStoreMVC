@@ -30,3 +30,5 @@ C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\obj\Debug\net8.
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\obj\Debug\net8.0\refint\BookStoreMVC.DataAccess.dll
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\obj\Debug\net8.0\BookStoreMVC.DataAccess.pdb
 C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\obj\Debug\net8.0\ref\BookStoreMVC.DataAccess.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\bin\Debug\net8.0\BookStoreMVC.Utility.dll
+C:\Users\tomas\source\repos\BookStoreMVC\BookStoreMVC.DataAccess\bin\Debug\net8.0\BookStoreMVC.Utility.pdb

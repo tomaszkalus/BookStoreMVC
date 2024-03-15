@@ -1,11 +1,14 @@
 ﻿using BookStoreMVC.Models.JsonModels;
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models;
+using BookStoreMVC.Utility;
+using BookStoreMVC.DataAccess.Repository.IRepository;
+using BookStoreMVC.Models;
+using BookStoreMVC.Models.ViewModels;
+using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyWeb.Areas.Customer.Controllers
+namespace BookStoreMVC.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class ShoppingCartController : Controller
@@ -18,22 +21,22 @@ namespace BulkyWeb.Areas.Customer.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            string userId = _userManager.GetUserId(User);
+            CartVM cartVM = new CartVM()
             {
-                var userId = _userManager.GetUserId(User);
-                IEnumerable<UserProductShoppingCart> userCart = _unitOfWork.UserProductShoppingCart.GetByUserId(userId);
-                return View(userCart);
-            }
-            return RedirectToAction(controllerName: "Identity", actionName: "Login");
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
 
-
+            return View(cartVM);
         }
 
         // API CALLS
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
         public async Task<IActionResult> AddToShoppingCart([FromBody] ProductDTO newCartItem)
         {
 
@@ -48,7 +51,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 return Json(new { success = false, message = "The user isn't authenticated" });
             }
 
-            UserProductShoppingCart? itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id)
+            ShoppingCartItem? itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id)
                 .FirstOrDefault(p => p.productId == newCartItem.ProductId);
 
             if (itemInCart != null)
@@ -58,7 +61,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             }
             else
             {
-                UserProductShoppingCart shoppingCartItem = new UserProductShoppingCart()
+                ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
                 {
                     userId = currentUser.Id,
                     productId = newCartItem.ProductId,
@@ -72,6 +75,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return Json(new { success = true, message = "Adding to cart Successful!" });
         }
 
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
         public async Task<IActionResult> GetCartAmount()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -87,6 +91,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
         public async Task<IActionResult> UpdateItemQuantity([FromBody] ProductDTO cartItem)
         {
             if (!ModelState.IsValid)
@@ -115,7 +120,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
         public async Task<IActionResult> RemoveCartItem(int id)
         {
 
@@ -129,8 +134,9 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return Json(new { success = false, message = "There was an error when removing from cart" });
         }
 
-        [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> ItemQuantity(int id)
+        [HttpGet]
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
+        public async Task<IActionResult> ItemTotalPrice(int id)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
@@ -141,9 +147,39 @@ namespace BulkyWeb.Areas.Customer.Controllers
             var itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id).Single(u => u.productId == id);
             if (itemInCart != null)
             {
-                return Json(new { success = true, quantity = itemInCart.quantity });
+                return Json(new { success = true, totalPrice = itemInCart.TotalPrice.ToString("c") });
             }
             return Json(new { success = false, message = "There was an error when getting the quantity" });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
+        public async Task<IActionResult> TotalPrices()
+        {
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return StatusCode(401);
+            }
+
+            var cartItems = _unitOfWork.UserProductShoppingCart.GetByUserId(currentUser.Id);
+            double subtotal = cartItems.Sum(item => item.TotalPrice);
+            double vat = subtotal - (subtotal / (1 + Constants.Prices.Vat));
+            double shipping = Constants.Prices.Shipping;
+            double total = subtotal + shipping;
+
+
+            return Json(new
+            {
+                success = true,
+                subtotal = subtotal.ToString("c"),
+                vat = vat.ToString("c"),
+                shipping = shipping.ToString("c"),
+                total = total.ToString("c")
+            });
+
+
         }
 
 

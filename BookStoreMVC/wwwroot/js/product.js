@@ -30,7 +30,9 @@ function loadDataTable() {
             document.querySelectorAll('.delete-product-btn').forEach(item => {
                 item.addEventListener('click', event => {
                     console.log("X")
-                    const id = item.getAttribute('data-id');
+
+
+                    id = item.getAttribute('data-id');
                     showDeleteModal(id);
                 })
             })

@@ -1,12 +1,7 @@
-﻿using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookStoreMVC.DataAccess.Data;
+using BookStoreMVC.DataAccess.Repository.IRepository;
 
-namespace Bulky.DataAccess.Repository
+namespace BookStoreMVC.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -22,10 +17,10 @@ namespace Bulky.DataAccess.Repository
             Product = new ProductRepository(_db);
             UserProductShoppingCart = new UserProductShoppingCartRepository(_db);
         }
-        
+
         public void Save()
         {
-             _db.SaveChanges();
+            _db.SaveChanges();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Bulky.Models;
+﻿using BookStoreMVC.Models;
 
-namespace Bulky.DataAccess.Repository.IRepository
+namespace BookStoreMVC.DataAccess.Repository.IRepository
 {
     public interface IProductRepository : IRepository<Product>
     {

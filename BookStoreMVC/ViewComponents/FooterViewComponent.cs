@@ -1,5 +1,5 @@
-﻿using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models;
+﻿using BookStoreMVC.DataAccess.Repository.IRepository;
+using BookStoreMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreMVC.ViewComponents
