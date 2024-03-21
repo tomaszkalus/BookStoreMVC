@@ -7,6 +7,9 @@ using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BookStoreMVC.Models;
 using System.Globalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using BookStoreMVC.Services;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,16 +24,59 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
     .AddDefaultTokenProviders();
 
 
-builder.Services.ConfigureApplicationCookie(options =>
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.LoginPath = $"/Identity/Account/Login";
+//    options.LogoutPath = $"/Identity/Account/Logout";
+//    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+//});
+
+builder.Services.ConfigureApplicationCookie(o =>
 {
-    options.LoginPath = $"/Identity/Account/Login";
-    options.LogoutPath = $"/Identity/Account/Logout";
-    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+    o.Events = new CookieAuthenticationEvents()
+    {
+        OnRedirectToLogin = (ctx) =>
+        {
+            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+            {
+                ctx.Response.StatusCode = 401;
+            }
+
+            return Task.CompletedTask;
+        },
+        OnRedirectToAccessDenied = (ctx) =>
+        {
+            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+            {
+                ctx.Response.StatusCode = 403;
+            }
+
+            return Task.CompletedTask;
+        }
+    };
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(o =>
+{
+    o.InvalidModelStateResponseFactory = actionContext =>
+    {
+
+        List<Error> error = actionContext.ModelState
+                    .Where(modelError => modelError.Value.Errors.Count > 0)
+                    .Select(modelError => new Error
+                    {
+                        ErrorField = modelError.Key,
+                        ErrorDescription = modelError.Value.Errors.FirstOrDefault().ErrorMessage
+                    }).ToList();
+
+        return new BadRequestObjectResult(error);
+    };
 });
 
 builder.Services.AddRazorPages(); 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddTransient<ICartService, CartService>();
 
 var app = builder.Build();
 

@@ -12,12 +12,12 @@ itemQuantityInputs.forEach(input => {
             ProductId: productId,
             quantity: quantity
         }
-        fetch(`/Customer/ShoppingCart/UpdateItemQuantity/${productId}`, {
-            method: 'POST',
+        fetch(`/api/user/cart/item/${productId}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(product)
+            body: quantity
         })
             .then(res => {
                 if (!res.ok) {
@@ -48,8 +48,8 @@ itemDeleteButtons.forEach(button => {
     button.addEventListener('click', () => {
         const productId = parseInt(button.getAttribute('data-id'))
 
-        fetch(`/Customer/ShoppingCart/RemoveCartItem/${productId}`, {
-            method: 'POST',
+        fetch(`/api/user/cart/item/${productId}`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -79,7 +79,7 @@ itemDeleteButtons.forEach(button => {
 })
 
 function refreshItemQuantityAndPrice(productId) {
-    fetch(`/Customer/ShoppingCart/ItemTotalPrice/${productId}`, {
+    fetch(`/api/user/cart/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -93,6 +93,7 @@ function refreshItemQuantityAndPrice(productId) {
         })
         .then(data => {
             if (data) {
+                console.log(data)
                 const itemTotalPrice = document.querySelector(`#total-price-${productId}`)
                 const itemQuantityInput = document.querySelector(`#quantity-${productId}-input`)
                 const itemQuantity = document.querySelector(`#quantity-${productId}`)
@@ -103,7 +104,7 @@ function refreshItemQuantityAndPrice(productId) {
 }
 
 function updateTotalPrices() {
-    fetch(`/Customer/ShoppingCart/TotalPrices`, {
+    fetch(`/api/user/cart/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

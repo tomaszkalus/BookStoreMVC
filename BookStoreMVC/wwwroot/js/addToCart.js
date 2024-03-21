@@ -10,12 +10,12 @@ shoppingCartBtns.forEach(btn => {
             ProductId: productId,
             Quantity: productQuantity
         }
-        fetch(`/Customer/ShoppingCart/AddToShoppingCart/${productId}`, {
+        fetch(`/api/user/cart/${productId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(product)
+            body: product
         })
         .then(res => res.json())
             .then(data => {
@@ -43,7 +43,7 @@ shoppingCartBtns.forEach(btn => {
 })
 
 function refreshCartProductAmount() {
-    fetch('/Customer/ShoppingCart/GetCartAmount', {
+    fetch('/api/user/cart/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ function refreshCartProductAmount() {
         })
         .then(data => {
             if (data) {
-                shoppingCartItemsAmount.innerHTML = `(${data.cartAmount})`
+                shoppingCartItemsAmount.innerHTML = `(${data.itemsQuantity})`
             }            
         })
 }
