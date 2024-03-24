@@ -79,7 +79,7 @@ itemDeleteButtons.forEach(button => {
 })
 
 function refreshItemQuantityAndPrice(productId) {
-    fetch(`/api/user/cart/`, {
+    fetch(`/api/user/cart/item/${productId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -93,11 +93,10 @@ function refreshItemQuantityAndPrice(productId) {
         })
         .then(data => {
             if (data) {
-                console.log(data)
                 const itemTotalPrice = document.querySelector(`#total-price-${productId}`)
                 const itemQuantityInput = document.querySelector(`#quantity-${productId}-input`)
                 const itemQuantity = document.querySelector(`#quantity-${productId}`)
-                itemTotalPrice.textContent = data.totalPrice
+                itemTotalPrice.textContent = data.totalPrice.formatted
                 itemQuantity.textContent = itemQuantityInput.value
             }
         })
@@ -118,6 +117,7 @@ function updateTotalPrices() {
         })
         .then(data => {
             if (data) {
+                console.log(data)
                 document.querySelector('#total').textContent = data.total;
                 document.querySelector('#subtotal').textContent = data.subtotal;
                 document.querySelector('#vat').textContent = data.vat;

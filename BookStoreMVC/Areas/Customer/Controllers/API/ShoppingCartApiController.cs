@@ -1,7 +1,9 @@
-﻿using BookStoreMVC.DataAccess.Repository.IRepository;
+﻿using Ajax;
+using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using BookStoreMVC.Models.DTO;
 using BookStoreMVC.Models.Mappers;
+using BookStoreMVC.Models.ViewModels;
 using BookStoreMVC.Services;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -26,72 +28,87 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             _cartService = cartService;
         }
 
-        // GET api/user/cart
         [HttpGet]
-        public ActionResult<CartDTO> GetCart()
+        public ActionResult<JSend> GetCart()
         {
             string? userId = _userManager.GetUserId(HttpContext.User);
-            CartDTO cartDTO = ShoppingCartMapper.MapToDto(_unitOfWork.UserProductShoppingCart.GetByUserId(userId));
-            return Ok(cartDTO);
+            CartVM cartVM = new CartVM
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+            CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
+            return Ok(JSend.Success(cartDTO));
         }
 
         // GET api/user/cart
-        [HttpGet("item/{itemId}")]
-        public ActionResult<CartItemDTO> GetCart(int itemId)
+        [HttpGet("item/{productId}")]
+        public ActionResult<JSend> GetCart(int productId)
         {
+            if (_unitOfWork.Product.GetById(productId) == null)
+            {
+                return NotFound(JSend.Fail("Product does not exist"));
+            }
             string? userId = _userManager.GetUserId(HttpContext.User);
             ShoppingCartItem? shoppingCartItem = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
-                .FirstOrDefault(p => p.productId == itemId);
+                .FirstOrDefault(p => p.productId == productId);
 
             if (shoppingCartItem == null)
             {
-                return NotFound("Item not found");
+                return NotFound(JSend.Fail("Item is not present in the cart"));
             }
 
             CartItemDTO cartItemDTO = ShoppingCartMapper.MapToDto(shoppingCartItem);
-            return Ok(cartItemDTO);
+            return Ok(JSend.Success(cartItemDTO));
         }
 
         // POST api/user/cart
         [HttpPost]
-        public ActionResult<CartDTO> AddItemToCart([FromBody] ProductDTO newCartItem)
+        public ActionResult<JSend> AddItemToCart([FromBody] ProductDTO newCartItem)
         {
             string userId = _userManager.GetUserId(HttpContext.User);
 
             ServiceResult result = _cartService.AddItem(newCartItem.ProductId, newCartItem.Quantity, userId);
             if (!result.Success)
             {
-                return NotFound(result.Message);
+                return NotFound(JSend.Fail(result.Message));
             }
 
-            CartDTO cartDTO = ShoppingCartMapper.MapToDto(_unitOfWork.UserProductShoppingCart.GetByUserId(userId));
-            return Ok(cartDTO);
+            CartVM cartVM = new CartVM
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+            CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
+            return Ok(JSend.Success(cartDTO));
         }
 
         // PUT api/user/cart/item/5
         [HttpPut("item/{id}")]
-        public ActionResult<CartDTO> UpdateCartItem(int id, [FromBody] int quantity)
+        public ActionResult<JSend> UpdateCartItem(int id, [FromBody] int quantity)
         {
             string userId = _userManager.GetUserId(HttpContext.User);
             ServiceResult result = _cartService.UpdateQuantity(id, quantity, userId);
 
             if (!result.Success)
             {
-                return NotFound(result.Message);
+                return NotFound(JSend.Fail(result.Message));
             }
-            CartDTO cartDTO = ShoppingCartMapper.MapToDto(_unitOfWork.UserProductShoppingCart.GetByUserId(userId));
-            return Ok(cartDTO);
+            CartVM cartVM = new CartVM
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+            CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
+            return Ok(JSend.Success(cartDTO));
         }
 
         // DELETE api/user/cart/item/5
         [HttpDelete("item/{id}")]
-        public ActionResult<CartDTO> DeleteCartItem(int id)
+        public ActionResult<JSend> DeleteCartItem(int id)
         {
             Product? product = _unitOfWork.Product.GetById(id);
 
             if (product == null)
             {
-                return NotFound("Product not found");
+                return NotFound(JSend.Fail("Product does not exist"));
             }
 
             string? userId = _userManager.GetUserId(HttpContext.User);
@@ -100,14 +117,18 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
 
             if (shoppingCartItem == null)
             {
-                return NotFound("Item not found");
+                return NotFound(JSend.Fail("Item is not present in the cart"));
             }
 
             _unitOfWork.UserProductShoppingCart.Remove(shoppingCartItem);
             _unitOfWork.Save();
 
-            CartDTO cartDTO = ShoppingCartMapper.MapToDto(_unitOfWork.UserProductShoppingCart.GetByUserId(userId));
-            return Ok(cartDTO);
+            CartVM cartVM = new CartVM
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+            CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
+            return Ok(JSend.Success(cartDTO));
         }
     }
 }

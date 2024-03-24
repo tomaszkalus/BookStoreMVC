@@ -2,6 +2,7 @@
 
 namespace BookStoreMVC.Models.ViewModels
 {
+    //TODO Use CartVM for creating CartDTO
     public class CartVM
     {
         public IEnumerable<ShoppingCartItem> Items { get; set; }

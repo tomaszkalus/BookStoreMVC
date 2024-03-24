@@ -10,6 +10,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BookStoreMVC.Services;
 using Microsoft.AspNetCore.Mvc;
+using BookStoreMVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +94,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();
+app.UseMiddleware<CustomAuthenticationMiddleware>();
 app.UseAuthorization();
 
 app.MapRazorPages();
