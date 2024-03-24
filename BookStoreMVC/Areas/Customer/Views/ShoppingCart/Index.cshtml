@@ -39,7 +39,7 @@
             <h2>Summary</h2>
             <hr />
             <div class="d-flex flex-columns justify-content-between">
-                <span>Subtotal:</span><span id="subtotal"></span>
+                <span>Subtotal:</span><span id="subtotal">@Model.Subtotal.ToString("c")</span>
             </div>
             <div class="d-flex flex-columns justify-content-between">
                 <span>VAT (@(BookStoreMVC.Utility.Constants.Prices.Vat * 100)%):</span><span id="vat">@Model.Vat.ToString("c")</span>

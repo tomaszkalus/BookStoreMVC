@@ -10,39 +10,40 @@ shoppingCartBtns.forEach(btn => {
             ProductId: productId,
             Quantity: productQuantity
         }
-        fetch(`/api/user/cart/${productId}`, {
+        
+        fetch(`/api/user/cart/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: product
+            body: JSON.stringify(product)
         })
         .then(res => res.json())
             .then(data => {
-                let toast;
-                if (data.success == true) {
-                    toast = {
-                        title: "Success",
-                        message: "Product was added to cart!",
-                        status: TOAST_STATUS.SUCCESS,
-                        timeout: 5000
-                    }
+                const toast = {
+                    title: "Success",
+                    message: "Product has been added to cart.",
+                    status: TOAST_STATUS.SUCCESS,
+                    timeout: 2000
                 }
-                else {
-                    toast = {
-                        title: "Error",
-                        message: "There was an error with adding product to cart.",
-                        status: TOAST_STATUS.DANGER,
-                        timeout: 5000
-                    }
+
+                if (!data || data.status != "success") {
+                    toast.title = "Error"
+                    toast.message = "There was an error with adding product to cart."
+                    toast.status = TOAST_STATUS.DANGER
                 }
+
                 Toast.create(toast);
-                refreshCartProductAmount()
+                refreshCartProductAmount(data.data.itemsQuantity)
         })
     })
 })
 
-function refreshCartProductAmount() {
+function refreshCartProductAmount(cartQuantity) {
+    if (cartQuantity != undefined) {
+        shoppingCartItemsAmount.innerHTML = `(${cartQuantity})`
+        return
+    }
     fetch('/api/user/cart/', {
         method: 'GET',
         headers: {
@@ -58,7 +59,7 @@ function refreshCartProductAmount() {
         })
         .then(data => {
             if (data) {
-                shoppingCartItemsAmount.innerHTML = `(${data.itemsQuantity})`
+                shoppingCartItemsAmount.innerHTML = `(${data.data.itemsQuantity})`
             }            
         })
 }

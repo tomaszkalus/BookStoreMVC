@@ -54,7 +54,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a asp-controller="ShoppingCart" asp-action="Index" class="nav-link text-white position-relative">
+                            <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="nav-link text-white position-relative">
                                 <i class="bi bi-cart-fill me-1 text-white"></i>
                                 Cart <span id="cart-amount"></span>
                             </a>

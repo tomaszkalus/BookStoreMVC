@@ -17,7 +17,7 @@ namespace BookStoreMVC.Services
             Product product = _unitOfWork.Product.GetById(productId);
             if (product == null)
             {
-                return new ServiceResult() { Success = false, Message = "Product not found" };
+                return new ServiceResult() { Success = false, Message = "There was an error with adding product to cart." };
             }
 
             ShoppingCartItem? itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
@@ -39,7 +39,7 @@ namespace BookStoreMVC.Services
                 _unitOfWork.UserProductShoppingCart.Add(shoppingCartItem);
             }
             _unitOfWork.Save();
-            return new ServiceResult() { Success = true, Message = "Item added to cart" };
+            return new ServiceResult() { Success = true, Message = "Product has been added to cart" };
         }
 
         public ServiceResult UpdateQuantity(int productId, int quantity, string userId)
@@ -49,7 +49,7 @@ namespace BookStoreMVC.Services
 
             if (shoppingCartItem == null)
             {
-                return new ServiceResult() { Success = false, Message = "Product not found in the cart" };
+                return new ServiceResult() { Success = false, Message = "Product was not found in the cart" };
             }
 
             shoppingCartItem.quantity = quantity;

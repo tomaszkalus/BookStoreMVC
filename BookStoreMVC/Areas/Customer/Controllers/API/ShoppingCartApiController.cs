@@ -66,11 +66,12 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
         public ActionResult<JSend> AddItemToCart([FromBody] ProductDTO newCartItem)
         {
             string userId = _userManager.GetUserId(HttpContext.User);
+            JSend response;
 
             ServiceResult result = _cartService.AddItem(newCartItem.ProductId, newCartItem.Quantity, userId);
             if (!result.Success)
             {
-                return NotFound(JSend.Fail(result.Message));
+                return NotFound(JSend.Fail());
             }
 
             CartVM cartVM = new CartVM
@@ -78,6 +79,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
             CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
+
             return Ok(JSend.Success(cartDTO));
         }
 

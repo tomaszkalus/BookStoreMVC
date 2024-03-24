@@ -1,6 +1,4 @@
-﻿using BookStoreMVC.Models;
-
-namespace BookStoreMVC.Models.ViewModels
+﻿namespace BookStoreMVC.Models.ViewModels
 {
     public class HomeVM
     {

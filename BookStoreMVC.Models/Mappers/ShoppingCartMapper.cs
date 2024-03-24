@@ -1,10 +1,5 @@
 ﻿using BookStoreMVC.Models.DTO;
 using BookStoreMVC.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStoreMVC.Models.Mappers
 {
@@ -15,7 +10,7 @@ namespace BookStoreMVC.Models.Mappers
             return new CartDTO
             {
                 Items = cartVM.Items.Select(i => MapToDto(i)),
-                ItemsQuantity = cartVM.Items.Count(),
+                ItemsQuantity = cartVM.ItemsQuantity,
                 Subtotal = new PriceDTO(cartVM.Subtotal),
                 Shipping = new PriceDTO(cartVM.Shipping),
                 Vat = new PriceDTO(cartVM.Vat),

@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStoreMVC.Models.ViewModels
 {
@@ -12,6 +7,6 @@ namespace BookStoreMVC.Models.ViewModels
     {
         public Product Product { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> CategoryList { get; set;}
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 }

@@ -1,17 +1,11 @@
 ﻿const itemQuantityInputs = document.querySelectorAll('.cart-item-quantity-input')
 const itemDeleteButtons = document.querySelectorAll('.cart-item-remove-btn')
 
-
-
-
 itemQuantityInputs.forEach(input => {
     input.addEventListener('change', () => {
         const productId = parseInt(input.getAttribute('data-id'))
         const quantity = parseInt(input.value)
-        const product = {
-            ProductId: productId,
-            quantity: quantity
-        }
+
         fetch(`/api/user/cart/item/${productId}`, {
             method: 'PUT',
             headers: {
@@ -30,16 +24,18 @@ itemQuantityInputs.forEach(input => {
                     title: "Success",
                     message: "Product quantity has been updated.",
                     status: TOAST_STATUS.SUCCESS,
+                    timeout: 2000
                 }
 
-                if (!data || data.success != true) {
+                if (!data || data.status != "success") {
                     toast.title = "Error"
                     toast.message = "There was an error with updating product quantity."
                     toast.status = TOAST_STATUS.DANGER
                 }
                 Toast.create(toast);
-                refreshItemQuantityAndPrice(productId)
-                updateTotalPrices()
+                refreshItemQuantity(productId)
+                refreshProductPrice(productId, data.data.items)
+                updateTotalPrices(data.data)
             })
     })
 })
@@ -60,70 +56,44 @@ itemDeleteButtons.forEach(button => {
                     title: "Success",
                     message: "Product has been successfully removed from the cart.",
                     status: TOAST_STATUS.SUCCESS,
+                    timeout: 2000
                 }
 
-                if (data && data.success) {
-                    document.querySelector(`#cart-item-${productId}`).remove()
-                }
-                else {
+                if (!data || data.status != "success") {
                     toast.title = "Error"
                     toast.message = "There was an error with removing product from cart."
                     toast.status = TOAST_STATUS.DANGER
                 }
-                
+
                 Toast.create(toast);
-                refreshCartProductAmount()
-                updateTotalPrices()
+                removeCartItem(productId)
+                refreshCartProductAmount(data.data.itemsQuantity)
+                updateTotalPrices(data.data)
+                
             })
     })
 })
 
-function refreshItemQuantityAndPrice(productId) {
-    fetch(`/api/user/cart/item/${productId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => {
-            if (!res.ok) {
-                return;
-            }
-            return res.json()
-        })
-        .then(data => {
-            if (data) {
-                const itemTotalPrice = document.querySelector(`#total-price-${productId}`)
-                const itemQuantityInput = document.querySelector(`#quantity-${productId}-input`)
-                const itemQuantity = document.querySelector(`#quantity-${productId}`)
-                itemTotalPrice.textContent = data.totalPrice.formatted
-                itemQuantity.textContent = itemQuantityInput.value
-            }
-        })
+function removeCartItem(productId) {
+    const item = document.querySelector(`#cart-item-${productId}`)
+    item.remove()
 }
 
-function updateTotalPrices() {
-    fetch(`/api/user/cart/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => {
-            if (!res.ok) {
-                return;
-            }
-            return res.json()
-        })
-        .then(data => {
-            if (data) {
-                console.log(data)
-                document.querySelector('#total').textContent = data.total;
-                document.querySelector('#subtotal').textContent = data.subtotal;
-                document.querySelector('#vat').textContent = data.vat;
-                document.querySelector('#shipping').textContent = data.shipping;
-            }
-        })
+function refreshItemQuantity(productId) {
+    const itemQuantityInput = document.querySelector(`#quantity-${productId}-input`)
+    const itemQuantity = document.querySelector(`#quantity-${productId}`)
+    itemQuantity.textContent = itemQuantityInput.value
 }
 
-//updateTotalPrices()
+function refreshProductPrice(productId, cartItems) {
+    const itemTotalPrice = document.querySelector(`#total-price-${productId}`)
+    const cartItem = cartItems.find(item => item.productId == productId)
+    itemTotalPrice.textContent = cartItem.totalPrice.formatted
+}
+
+function updateTotalPrices(cart) {
+    document.querySelector('#total').textContent = cart.total.formatted;
+    document.querySelector('#subtotal').textContent = cart.subtotal.formatted;
+    document.querySelector('#vat').textContent = cart.vat.formatted;
+    document.querySelector('#shipping').textContent = cart.shipping.formatted;
+}
