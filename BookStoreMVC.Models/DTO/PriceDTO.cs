@@ -2,10 +2,10 @@
 {
     public class PriceDTO
     {
-        public double Raw { get; }
+        public decimal Raw { get; }
         public string Formatted { get => Raw.ToString("c"); }
 
-        public PriceDTO(double raw)
+        public PriceDTO(decimal raw)
         {
             Raw = raw;
         }

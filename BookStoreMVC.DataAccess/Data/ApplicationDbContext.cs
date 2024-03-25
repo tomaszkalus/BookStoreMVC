@@ -1,5 +1,4 @@
 ﻿using BookStoreMVC.Models;
-using BookStoreMVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,7 @@ namespace BookStoreMVC.DataAccess.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -24,11 +23,18 @@ namespace BookStoreMVC.DataAccess.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name= "Action", DisplayOrder = 3},
+                new Category { Id = 1, Name = "Action", DisplayOrder = 3 },
                 new Category { Id = 2, Name = "Drama", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "Horror", DisplayOrder = 1 },
                 new Category { Id = 4, Name = "Sci-Fi", DisplayOrder = 4 }
                 );
+
+
+            modelBuilder.Entity<Product>()
+               .HasOne(p => p.Category)
+               .WithMany()
+               .HasForeignKey(p => p.CategoryId)
+               .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Product>().HasData(
                 new Product

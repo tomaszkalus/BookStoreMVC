@@ -5,7 +5,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-10">
+        <div class="col-md-10">
             @if (Model.Items.Count() == 0)
             {
                 <h3>Your cart is empty</h3>
@@ -14,8 +14,8 @@
             @foreach (var item in Model.Items)
             {
                 <div class="border-bottom row p-2" id="cart-item-@item.Product.Id">
-                    <div class="col-1"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></div>
-                    <div class="col-9 ps-4">
+                    <div class="col-md-4"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></div>
+                    <div class="col-md-6">
                         <div>
                             <a class="text-decoration-none text-black fw-bold" asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Author - @item.Product.Title</a>
 
@@ -26,7 +26,7 @@
                             <button class="btn btn-link text-danger p-0 mt-2 cart-item-remove-btn" data-id="@item.Product.Id"><i class="bi bi-trash3-fill me-1"></i>Remove</button>
                         </div>
                     </div>
-                    <div class="col-2 d-flex align-items-center flex-column justify-content-center ">
+                    <div class="col-md-2 d-flex align-items-center flex-column justify-content-center ">
                         <div>
                             <div id="total-price-@item.Product.Id">@item.TotalPrice.ToString("c")</div>
                             <div class="text-muted small">@item.Product.ListPrice.ToString("c") * <span id="quantity-@item.Product.Id">@item.quantity</span></div>
@@ -35,7 +35,7 @@
                 </div>
             }
         </div>
-        <div class="col-2 p-4">
+        <div class="col-md-2 p-4">
             <h2>Summary</h2>
             <hr />
             <div class="d-flex flex-columns justify-content-between">

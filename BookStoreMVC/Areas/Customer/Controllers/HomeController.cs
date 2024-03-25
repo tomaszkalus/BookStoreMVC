@@ -40,6 +40,10 @@ namespace BookStoreMVC.Areas.Customer.Controllers
         public IActionResult Details(int id)
         {
             var product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "Category");
+            if (product == null)
+            {
+                return NotFound();
+            }
             return View(product);
         }
 

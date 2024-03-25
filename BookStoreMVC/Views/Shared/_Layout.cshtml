@@ -15,7 +15,7 @@
 <body>
     @await Component.InvokeAsync("Menu")
 
-    <div class="container">
+    <div class="container" id="main">
         <main role="main" class="pb-3">
             <partial name="_Notification" />
             @RenderBody()
@@ -23,9 +23,6 @@
     </div>
 
     @await Component.InvokeAsync("Footer")
-
-        
-    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 

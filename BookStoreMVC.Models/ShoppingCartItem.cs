@@ -23,7 +23,7 @@ namespace BookStoreMVC.Models
         [ForeignKey("productId")]
         public Product Product { get; set; }
         [NotMapped]
-        public double TotalPrice
+        public decimal TotalPrice
         {
             get { return Product.ListPrice * quantity; }
         }

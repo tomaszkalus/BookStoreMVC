@@ -16,3 +16,9 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+#main {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 70px;
+}

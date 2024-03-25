@@ -6,9 +6,9 @@ namespace BookStoreMVC.Models.ViewModels
     {
         public IEnumerable<ShoppingCartItem> Items { get; set; }
         public int ItemsQuantity => Items.Count();
-        public double Subtotal => Items.Sum(x => x.Product.ListPrice * x.quantity);
-        public double Vat => Subtotal - (Subtotal / (1 + Constants.Prices.Vat));
-        public double Shipping => Subtotal == 0 ? 0 : Constants.Prices.Shipping;
-        public double Total => Subtotal + Shipping;
+        public decimal Subtotal => Items.Sum(x => x.Product.ListPrice * x.quantity);
+        public decimal Vat => Subtotal - (Subtotal / (1 + Constants.Prices.Vat));
+        public decimal Shipping => Subtotal == 0 ? 0 : Constants.Prices.Shipping;
+        public decimal Total => Subtotal + Shipping;
     }
 }

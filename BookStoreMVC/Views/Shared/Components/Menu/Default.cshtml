@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Category>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-dark text-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-dark text-white border-bottom box-shadow mb-5">
         <div class="container-fluid">
             <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">BookStoreMVC</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -14,7 +14,7 @@
                             Categories
                         </a>
                         <ul class="dropdown-menu">
-                            @foreach (var category in Model)
+                            @foreach (var category in Model.OrderBy(category => category.DisplayOrder))
                             {
                                 <li><a asp-controller="Home" asp-action="Category" asp-route-id="@category.Id" class="dropdown-item">@category.Name</a></li>
                             }
