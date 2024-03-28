@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Category>
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+@model IEnumerable<Category>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-dark text-white border-bottom box-shadow mb-5">
         <div class="container-fluid">
@@ -20,15 +24,7 @@
                             }
                         </ul>
                     </li>
-                   
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-controller="Home" asp-action="Index" asp-area="Customer">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-controller="Home" asp-action="Privacy" asp-area="Customer">Privacy</a>
-                    </li>
                     
-
                     @if (User.IsInRole(SD.Role_Admin))
                     {
                         <li class="nav-item dropdown">

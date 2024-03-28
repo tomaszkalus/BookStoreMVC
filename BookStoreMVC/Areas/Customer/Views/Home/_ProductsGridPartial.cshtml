@@ -28,14 +28,11 @@
 
                     <div class="card-body pb-0">
                         <div class="pl-1">
-                            <p class="card-title mb-0 text-dark opacity-75 text-uppercase text-center fs-5">@product.Title</p>
+                            <p class="card-title mb-0 text-black opacity-75 text-center fs-5">@product.Title</p>
                             <p class="card-title mb-0 text-secondary text-center fs-6">@product.Author</p>
                         </div>
                         <div class="pl-1">
-                            <p class="text-dark text-opacity-75 text-center mb-0">List price: <strong>@product.ListPrice.ToString("c")</strong></p>
-                        </div>
-                        <div class="pl-1">
-                            <p class="text-dark text-opacity-75 text-center fs-6">As low as: <strong>@product.Price100.ToString("c")</strong></p>
+                            <p class="text-dark text-opacity-75 text-center mb-0 fs-5 mb-3"><strong>@product.Price.ToString("c")</strong></p>
                         </div>
                     </div>
                         @if (User.Identity.IsAuthenticated)

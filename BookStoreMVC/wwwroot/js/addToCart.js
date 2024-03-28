@@ -5,7 +5,8 @@ const shoppingCartItemsAmount = document.querySelector('#cart-amount')
 shoppingCartBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const productId = parseInt(btn.getAttribute('data-id'))
-        const productQuantity = 1
+        const productQuantityInput = document.querySelector(`#quantity-${productId}`)
+        const productQuantity = productQuantityInput? parseInt(productQuantityInput.value) : 1
         const product = {
             ProductId: productId,
             Quantity: productQuantity

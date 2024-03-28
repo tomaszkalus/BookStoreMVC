@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
 <div>
     <h1>Browse products</h1>
     <partial name="_ProductsGridPartial" model="Model"/>

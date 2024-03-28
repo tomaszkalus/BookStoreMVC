@@ -45,7 +45,7 @@ namespace BookStoreMVC.Models
         [ValidateNever]
         public string? ImageUrl
         {
-            get => string.IsNullOrEmpty(imageUrl) ? "/images/product/no_photo.png" : imageUrl;
+            get => string.IsNullOrEmpty(imageUrl) ? "/images/product/no_photo.jpg" : imageUrl;
             set => imageUrl = value;
         }
 

@@ -1,4 +1,7 @@
 ﻿@model CartVM
+@{
+    ViewData["Title"] = "Cart";
+}
 
 <h1 class="mt-3">Cart</h1>
 <hr />
@@ -14,22 +17,21 @@
             @foreach (var item in Model.Items)
             {
                 <div class="border-bottom row p-2" id="cart-item-@item.Product.Id">
-                    <div class="col-md-4"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></div>
-                    <div class="col-md-6">
+                    <div class="col-md-1 col-3 d-flex justify-content-center"><img src="@item.Product.ImageUrl" alt="@item.Product.Title" style="max-height:100px" /></div>
+                    <div class="col-md-6 col-6">
                         <div>
                             <a class="text-decoration-none text-black fw-bold" asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Author - @item.Product.Title</a>
-
-                            <div class="form-inline d-flex align-items-center mt-3">
+                            <div class="form-inline d-flex align-items-center">
                                 <input class="form-control w-auto cart-item-quantity-input" id="quantity-@item.Product.Id-input" data-id="@item.Product.Id" type="number" value="@item.quantity" min="1" max="1000"/>
                                 <span class="align-self-center ms-2">pcs.</span>
                             </div>
-                            <button class="btn btn-link text-danger p-0 mt-2 cart-item-remove-btn" data-id="@item.Product.Id"><i class="bi bi-trash3-fill me-1"></i>Remove</button>
+                            <button class="btn btn-link text-danger cart-item-remove-btn d-inline p-0" data-id="@item.Product.Id"><i class="bi bi-trash3-fill me-1"></i><span class="">Remove</span></button>
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex align-items-center flex-column justify-content-center ">
+                    <div class="col-md-2 col-3 d-flex align-items-center flex-column justify-content-center text-nowrap ">
                         <div>
                             <div id="total-price-@item.Product.Id">@item.TotalPrice.ToString("c")</div>
-                            <div class="text-muted small">@item.Product.ListPrice.ToString("c") * <span id="quantity-@item.Product.Id">@item.quantity</span></div>
+                            <div class="text-muted small">@item.Product.Price.ToString("c") * <span id="quantity-@item.Product.Id">@item.quantity</span></div>
                         </div>
                     </div>
                 </div>
@@ -51,9 +53,13 @@
                 <span class="fw-bold">Total:</span><span id="total">@Model.Total.ToString("c")</span>
             </div>
         </div>
-
-
     </div>
+</div>
+
+<div class="text-center">
+    <a class="btn btn-primary mt-5" asp-action="Summary">
+        Go to checkout
+    </a>
 </div>
 
 @section Scripts {

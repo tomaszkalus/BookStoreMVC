@@ -14,15 +14,22 @@ using BookStoreMVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("eu-EU");
+var cultureInfo = new CultureInfo("en-US");
+cultureInfo.NumberFormat.CurrencySymbol = "€";
+
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
 
 
 //builder.Services.ConfigureApplicationCookie(options =>

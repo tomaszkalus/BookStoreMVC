@@ -17,6 +17,35 @@ namespace BookStoreMVC.DataAccess.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ShoppingCartItem> UserProductShoppingCarts { get; set; }
 
+        public override int SaveChanges()
+        {
+            var deletedBooks = ChangeTracker.Entries<Product>()
+                .Where(e => e.State == EntityState.Deleted);
+
+            foreach (var bookEntry in deletedBooks)
+            {
+                var book = bookEntry.Entity;
+                var imagePath = book.ImageUrl;
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    continue;
+                }
+                DeleteBookImage(imagePath);
+            }
+
+            return base.SaveChanges();
+        }
+
+        private void DeleteBookImage(string? imagePath)
+        {
+
+            if (!File.Exists(imagePath))
+            {
+                return;
+            }
+            File.Delete(imagePath);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
