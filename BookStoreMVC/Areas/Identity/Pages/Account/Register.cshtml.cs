@@ -129,9 +129,7 @@ namespace BookStoreMVC.Areas.Identity.Pages.Account
 
             if (!_roleManager.RoleExistsAsync(SD.Role_Cust).GetAwaiter().GetResult()){
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Cust)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Comp)).GetAwaiter().GetResult();
             }
 
             Input = new()

@@ -14,13 +14,23 @@ namespace BookStoreMVC.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            await _next(context);
-
-            if (context.Response.StatusCode == 401)
+            if (!context.User.Identity.IsAuthenticated && !context.Request.Path.StartsWithSegments("/Identity"))
             {
-                context.Response.ContentType = "application/json";
-                var response = JSend.Fail("User is not authenticated");
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                if (context.Request.Path.StartsWithSegments("/api"))
+                {
+                    context.Response.StatusCode = 401;
+                    context.Response.ContentType = "application/json";
+                    var response = JSend.Fail("User is not authenticated");
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                }
+                else
+                {
+                    context.Response.Redirect("/Identity/Account/Login?redirected=true");
+                }
+            }
+            else
+            {
+                await _next(context);
             }
         }
     }

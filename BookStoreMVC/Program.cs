@@ -28,41 +28,39 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
-//    .AddDefaultTokenProviders();
-
-
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.LoginPath = $"/Identity/Account/Login";
-//    options.LogoutPath = $"/Identity/Account/Logout";
-//    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-//});
 
 builder.Services.ConfigureApplicationCookie(o =>
 {
-    o.Events = new CookieAuthenticationEvents()
-    {
-        OnRedirectToLogin = (ctx) =>
-        {
-            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
-            {
-                ctx.Response.StatusCode = 401;
-            }
-
-            return Task.CompletedTask;
-        },
-        OnRedirectToAccessDenied = (ctx) =>
-        {
-            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
-            {
-                ctx.Response.StatusCode = 403;
-            }
-
-            return Task.CompletedTask;
-        }
-    };
+    o.LoginPath = "/Identity/Account/Login";
+    o.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
+
+
+
+//builder.Services.ConfigureApplicationCookie(o =>
+//{
+//    o.Events = new CookieAuthenticationEvents()
+//    {
+//        OnRedirectToLogin = (ctx) =>
+//        {
+//            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+//            {
+//                ctx.Response.StatusCode = 401;
+//            }
+
+//            return Task.CompletedTask;
+//        },
+//        OnRedirectToAccessDenied = (ctx) =>
+//        {
+//            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+//            {
+//                ctx.Response.StatusCode = 403;
+//            }
+
+//            return Task.CompletedTask;
+//        }
+//    };
+//});
 
 builder.Services.Configure<ApiBehaviorOptions>(o =>
 {
@@ -101,7 +99,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();
-app.UseMiddleware<CustomAuthenticationMiddleware>();
+//app.UseMiddleware<CustomAuthenticationMiddleware>();
 app.UseAuthorization();
 
 app.MapRazorPages();
