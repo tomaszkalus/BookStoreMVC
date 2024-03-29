@@ -1,11 +1,6 @@
 ﻿using BookStoreMVC.DataAccess.Data;
 using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStoreMVC.DataAccess.Repository
 {
@@ -26,7 +21,7 @@ namespace BookStoreMVC.DataAccess.Repository
         {
             _db.Products.Update(product);
             Product productFromDb = _db.Products.FirstOrDefault(p => p.Id == product.Id);
-            if(productFromDb != null)
+            if (productFromDb != null)
             {
                 productFromDb.Title = product.Title;
                 productFromDb.Description = product.Description;
@@ -37,8 +32,8 @@ namespace BookStoreMVC.DataAccess.Repository
                 productFromDb.CategoryId = product.CategoryId;
                 productFromDb.Author = product.Author;
                 productFromDb.ISBN = product.ISBN;
-                
-                if(product.ImageUrl != null)
+
+                if (product.ImageUrl != null)
                 {
                     productFromDb.ImageUrl = product.ImageUrl;
                 }

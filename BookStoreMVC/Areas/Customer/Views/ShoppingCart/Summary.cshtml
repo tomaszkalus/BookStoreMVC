@@ -1,37 +1,94 @@
 ﻿@model SummaryVM
 @{
-    ViewData["Title"] = "Summary";
+    ViewData["Title"] = "Order summary";
 }
 
-<h1 class="mt-3">Order summary</h1>
+<h1 class="mt-3">@ViewData["Title"]</h1>
 <hr />
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="mb-3">Shipping details:</h3>
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.User.StreetAddress" class="form-control" aria-required="false" />
+                <label asp-for="@Model.User.StreetAddress"></label>
+                <span asp-validation-for="@Model.User.StreetAddress" class="text-danger"></span>
+            </div>
 
-<div class="form-floating mb-3">
-    <input asp-for="@Model.User.StreetAddress" class="form-control" aria-required="false" />
-    <label asp-for="@Model.User.StreetAddress"></label>
-    <span asp-validation-for="@Model.User.StreetAddress" class="text-danger"></span>
-</div>
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.User.City" class="form-control" aria-required="false" />
+                <label asp-for="@Model.User.City"></label>
+                <span asp-validation-for="@Model.User.City" class="text-danger"></span>
+            </div>
 
-<div class="form-floating mb-3">
-    <input asp-for="@Model.User.City" class="form-control" aria-required="false" />
-    <label asp-for="@Model.User.City"></label>
-    <span asp-validation-for="@Model.User.City" class="text-danger"></span>
-</div>
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.User.State" class="form-control" aria-required="false" />
+                <label asp-for="@Model.User.State"></label>
+                <span asp-validation-for="@Model.User.State" class="text-danger"></span>
+            </div>
 
-<div class="form-floating mb-3">
-    <input asp-for="@Model.User.State" class="form-control" aria-required="false" />
-    <label asp-for="@Model.User.State"></label>
-    <span asp-validation-for="@Model.User.State" class="text-danger"></span>
-</div>
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.User.PostalCode" class="form-control" aria-required="false" />
+                <label asp-for="@Model.User.PostalCode"></label>
+                <span asp-validation-for="@Model.User.PostalCode" class="text-danger"></span>
+            </div>
 
-<div class="form-floating mb-3">
-    <input asp-for="@Model.User.PostalCode" class="form-control" aria-required="false" />
-    <label asp-for="@Model.User.PostalCode"></label>
-    <span asp-validation-for="@Model.User.PostalCode" class="text-danger"></span>
-</div>
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.User.PhoneNumber" class="form-control" aria-required="false" />
+                <label asp-for="@Model.User.PhoneNumber"></label>
+                <span asp-validation-for="@Model.User.PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Your order:</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <tr>
+                            <td><a class="text-decoration-none text-black" asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Author - @item.Product.Title</a></td>
+                            <td>@item.quantity</td>
+                            <td>@item.Product.Price</td>
+                            <td>@(item.Product.Price * item.quantity)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-<div class="form-floating mb-3">
-    <input asp-for="@Model.User.PhoneNumber" class="form-control" aria-required="false" />
-    <label asp-for="@Model.User.PhoneNumber"></label>
-    <span asp-validation-for="@Model.User.PhoneNumber" class="text-danger"></span>
+            <div>
+                <h2>Summary</h2>
+                <hr />
+                <div class="d-flex flex-columns justify-content-between">
+                    <span>Subtotal:</span><span id="subtotal">@Model.Cart.Subtotal.ToString("c")</span>
+                </div>
+                <div class="d-flex flex-columns justify-content-between">
+                    <span>VAT (@(BookStoreMVC.Utility.Constants.Prices.Vat * 100)%):</span><span id="vat">@Model.Cart.Vat.ToString("c")</span>
+                </div>
+                <div class="d-flex flex-columns justify-content-between">
+                    <span>Shipping:</span><span id="shipping">@Model.Cart.Shipping.ToString("c")</span>
+                </div>
+                <div class="d-flex flex-columns justify-content-between">
+                    <span class="fw-bold">Total:</span><span id="total">@Model.Cart.Total.ToString("c")</span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="text-center">
+        <a class="btn btn-secondary mt-5" asp-action="Index">
+            Back to cart
+        </a>
+        <a class="btn btn-primary mt-5" asp-action="Summary">
+            Place Order
+        </a>
+    </div>
 </div>

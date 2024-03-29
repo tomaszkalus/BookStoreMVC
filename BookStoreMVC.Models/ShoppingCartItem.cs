@@ -25,7 +25,7 @@ namespace BookStoreMVC.Models
         [NotMapped]
         public decimal TotalPrice
         {
-            get { return Product.ListPrice * quantity; }
+            get { return Product.Price * quantity; }
         }
 
 

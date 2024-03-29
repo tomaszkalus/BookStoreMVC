@@ -24,7 +24,7 @@ namespace BookStoreMVC.Models.Mappers
             {
                 ProductId = cartItem.productId,
                 Quantity = cartItem.quantity,
-                UnitPrice = new PriceDTO(cartItem.Product.ListPrice),
+                UnitPrice = new PriceDTO(cartItem.Product.Price),
                 TotalPrice = new PriceDTO(cartItem.TotalPrice)
             };
         }

@@ -13,8 +13,8 @@ namespace BookStoreMVC.Areas.Customer.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
-        public ShoppingCartController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ShoppingCartController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -32,16 +32,41 @@ namespace BookStoreMVC.Areas.Customer.Controllers
             return View(cartVM);
         }
 
-        //public IActionResult Summary()
-        //{
+        public IActionResult Summary()
+        {
 
-        //    ApplicationUser user = _userManager.GetUserAsync(User).Result;
-        //    SummaryVM summaryVM = new SummaryVM()
-        //    {
-        //        Cart = new CartVM(),
-        //        User = user
-        //    };
-        //    return View(summaryVM);
-        //}
+            ApplicationUser user = _userManager.GetUserAsync(User).Result;
+            string userId = _userManager.GetUserId(User);
+            CartVM cartVM = new CartVM()
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+
+
+            SummaryVM summaryVM = new SummaryVM()
+            {
+                Cart = cartVM,
+                User = user
+            };
+            return View(summaryVM);
+        }
+        
+        public IActionResult PlaceOrder()
+        {
+            ApplicationUser user = _userManager.GetUserAsync(User).Result;
+            string userId = _userManager.GetUserId(User);
+            CartVM cartVM = new CartVM()
+            {
+                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            };
+
+            SummaryVM summaryVM = new SummaryVM()
+            {
+                Cart = cartVM,
+                User = user
+            };
+
+            return View(summaryVM);
+        }
     }
 }

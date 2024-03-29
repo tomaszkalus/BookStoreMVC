@@ -19,9 +19,9 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICartService _cartService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ShoppingCartApiController(IUnitOfWork unitOfWork, ICartService cartService, UserManager<IdentityUser> userManager)
+        public ShoppingCartApiController(IUnitOfWork unitOfWork, ICartService cartService, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
