@@ -1,5 +1,7 @@
 ﻿using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
+using BookStoreMVC.Utility;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreMVC.Services
 {
@@ -58,5 +60,34 @@ namespace BookStoreMVC.Services
             return new ServiceResult() { Success = true, Message = "Cart updated" };
         }
 
+        public ServiceResult PlaceOrder(Cart cart)
+        {
+            Order order = new Order
+            {
+                OrderId = Guid.NewGuid().ToString(),
+                UserId = cart.UserId,
+                Date = DateTime.Now,
+                Status = Constants.OrderStatus.Pending,
+            };
+
+            order.Items = cart.Items.Select(item => new OrderItem
+            {
+                ProductId = item.productId,
+                Quantity = item.quantity,
+                Price = item.Product.Price
+            }).ToList();
+
+            _unitOfWork.Order.Add(order);
+
+            foreach (ShoppingCartItem item in cart.Items)
+            {
+                _unitOfWork.UserProductShoppingCart.Remove(item);
+            }
+            _unitOfWork.Save();
+            return new ServiceResult() { Success = true, Message = "Order has been placed successfully." };
+        }
+
     }
+
 }
+

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace BookStoreMVC.DataAccess.Data
 {
@@ -16,6 +17,8 @@ namespace BookStoreMVC.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ShoppingCartItem> UserProductShoppingCarts { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public override int SaveChanges()
         {
@@ -57,6 +60,8 @@ namespace BookStoreMVC.DataAccess.Data
                 new Category { Id = 3, Name = "Horror", DisplayOrder = 1 },
                 new Category { Id = 4, Name = "Sci-Fi", DisplayOrder = 4 }
                 );
+
+
 
 
             modelBuilder.Entity<Product>()

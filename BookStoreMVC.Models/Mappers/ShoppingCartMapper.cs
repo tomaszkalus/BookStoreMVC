@@ -1,11 +1,10 @@
 ﻿using BookStoreMVC.Models.DTO;
-using BookStoreMVC.Models.ViewModels;
 
 namespace BookStoreMVC.Models.Mappers
 {
     public static class ShoppingCartMapper
     {
-        public static CartDTO MapToDto(CartVM cartVM)
+        public static CartDTO MapToDto(Cart cartVM)
         {
             return new CartDTO
             {

@@ -1,6 +1,7 @@
 ﻿using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using BookStoreMVC.Models.ViewModels;
+using BookStoreMVC.Services;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,17 +15,18 @@ namespace BookStoreMVC.Areas.Customer.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
-        public ShoppingCartController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        private readonly ICartService _cartService;
+        public ShoppingCartController(IUnitOfWork unitOfWork, ICartService cartService, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _cartService = cartService;
         }
 
-        
         public IActionResult Index()
         {
             string userId = _userManager.GetUserId(User);
-            CartVM cartVM = new CartVM()
+            Cart cartVM = new Cart()
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
@@ -37,7 +39,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers
 
             ApplicationUser user = _userManager.GetUserAsync(User).Result;
             string userId = _userManager.GetUserId(User);
-            CartVM cartVM = new CartVM()
+            Cart cartVM = new Cart()
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
@@ -50,23 +52,22 @@ namespace BookStoreMVC.Areas.Customer.Controllers
             };
             return View(summaryVM);
         }
-        
+
+        [HttpPost]
         public IActionResult PlaceOrder()
         {
-            ApplicationUser user = _userManager.GetUserAsync(User).Result;
             string userId = _userManager.GetUserId(User);
-            CartVM cartVM = new CartVM()
-            {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
-            };
+            Cart cart = _unitOfWork.ShoppingCart.GetCart(userId);
 
-            SummaryVM summaryVM = new SummaryVM()
+            ServiceResult result = _cartService.PlaceOrder(cart);
+            if (result.Success == false)
             {
-                Cart = cartVM,
-                User = user
-            };
-
-            return View(summaryVM);
+                TempData["error"] = "Error while placing order!";
+                return RedirectToAction("Summary");
+            }
+            
+            TempData["success"] = "Order has been placed successfully!";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

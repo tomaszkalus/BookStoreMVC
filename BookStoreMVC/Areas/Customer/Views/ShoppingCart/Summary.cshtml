@@ -5,6 +5,7 @@
 
 <h1 class="mt-3">@ViewData["Title"]</h1>
 <hr />
+<form method="Post" asp-action="PlaceOrder">
 <div class="container">
     <div class="row">
         <div class="col-6">
@@ -87,8 +88,9 @@
         <a class="btn btn-secondary mt-5" asp-action="Index">
             Back to cart
         </a>
-        <a class="btn btn-primary mt-5" asp-action="Summary">
+        <button class="btn btn-primary mt-5" id="place-order-btn">
             Place Order
-        </a>
+        </button>
     </div>
 </div>
+</form>

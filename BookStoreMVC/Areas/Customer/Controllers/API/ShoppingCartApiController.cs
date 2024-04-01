@@ -3,7 +3,6 @@ using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using BookStoreMVC.Models.DTO;
 using BookStoreMVC.Models.Mappers;
-using BookStoreMVC.Models.ViewModels;
 using BookStoreMVC.Services;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -32,7 +31,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
         public ActionResult<JSend> GetCart()
         {
             string? userId = _userManager.GetUserId(HttpContext.User);
-            CartVM cartVM = new CartVM
+            Cart cartVM = new Cart
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
@@ -74,7 +73,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
                 return NotFound(JSend.Fail());
             }
 
-            CartVM cartVM = new CartVM
+            Cart cartVM = new Cart
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
@@ -94,7 +93,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             {
                 return NotFound(JSend.Fail(result.Message));
             }
-            CartVM cartVM = new CartVM
+            Cart cartVM = new Cart
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
@@ -125,7 +124,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             _unitOfWork.UserProductShoppingCart.Remove(shoppingCartItem);
             _unitOfWork.Save();
 
-            CartVM cartVM = new CartVM
+            Cart cartVM = new Cart
             {
                 Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
             };
