@@ -2,7 +2,7 @@
 
 namespace BookStoreMVC.DataAccess.Repository.IRepository
 {
-    public interface IUserProductShoppingCart : IRepository<ShoppingCartItem>
+    public interface ICartItemRepository : IRepository<ShoppingCartItem>
     {
         void Update(ShoppingCartItem userProductShoppingCart);
         public ShoppingCartItem? GetById(int id);

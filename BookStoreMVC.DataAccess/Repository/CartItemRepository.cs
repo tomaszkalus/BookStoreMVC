@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreMVC.DataAccess.Repository
 {
-    public class UserProductShoppingCartRepository : Repository<ShoppingCartItem>, IUserProductShoppingCart
+    public class CartItemRepository : Repository<ShoppingCartItem>, ICartItemRepository
     {
         private ApplicationDbContext _db;
 
-        public UserProductShoppingCartRepository(ApplicationDbContext db) : base(db)
+        public CartItemRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

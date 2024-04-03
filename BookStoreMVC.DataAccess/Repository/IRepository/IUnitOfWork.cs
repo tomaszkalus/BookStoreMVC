@@ -10,10 +10,10 @@ namespace BookStoreMVC.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
-        IUserProductShoppingCart UserProductShoppingCart { get; }
+        ICartItemRepository CartItem { get; }
         IOrderRepository Order { get; }
         IOrderItemRepository OrderItem { get; }
-        IShoppingCartRepository ShoppingCart { get; }
+        ICartRepository ShoppingCart { get; }
 
         void Save();
     }

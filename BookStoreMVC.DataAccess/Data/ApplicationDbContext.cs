@@ -1,8 +1,6 @@
 ﻿using BookStoreMVC.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
 
 namespace BookStoreMVC.DataAccess.Data
 {
@@ -19,6 +17,26 @@ namespace BookStoreMVC.DataAccess.Data
         public DbSet<ShoppingCartItem> UserProductShoppingCarts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var deletedBooks = ChangeTracker.Entries<Product>()
+                .Where(e => e.State == EntityState.Deleted);
+
+            foreach (var bookEntry in deletedBooks)
+            {
+                var book = bookEntry.Entity;
+                var imagePath = book.ImageUrl;
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    continue;
+                }
+                DeleteBookImage(imagePath);
+            }
+
+            return await base.SaveChangesAsync();
+
+        }
 
         public override int SaveChanges()
         {

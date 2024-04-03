@@ -1,7 +1,7 @@
 ﻿using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
+using BookStoreMVC.Models.ViewModels;
 using BookStoreMVC.Utility;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreMVC.Services
 {
@@ -22,13 +22,13 @@ namespace BookStoreMVC.Services
                 return new ServiceResult() { Success = false, Message = "There was an error with adding product to cart." };
             }
 
-            ShoppingCartItem? itemInCart = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            ShoppingCartItem? itemInCart = _unitOfWork.CartItem.GetByUserId(userId)
                 .FirstOrDefault(p => p.productId == productId);
 
             if (itemInCart != null)
             {
                 itemInCart.quantity += quantity;
-                _unitOfWork.UserProductShoppingCart.Update(itemInCart);
+                _unitOfWork.CartItem.Update(itemInCart);
             }
             else
             {
@@ -38,7 +38,7 @@ namespace BookStoreMVC.Services
                     quantity = quantity,
                     userId = userId
                 };
-                _unitOfWork.UserProductShoppingCart.Add(shoppingCartItem);
+                _unitOfWork.CartItem.Add(shoppingCartItem);
             }
             _unitOfWork.Save();
             return new ServiceResult() { Success = true, Message = "Product has been added to cart" };
@@ -46,7 +46,7 @@ namespace BookStoreMVC.Services
 
         public ServiceResult UpdateQuantity(int productId, int quantity, string userId)
         {
-            ShoppingCartItem shoppingCartItem = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            ShoppingCartItem shoppingCartItem = _unitOfWork.CartItem.GetByUserId(userId)
                 .FirstOrDefault(p => p.productId == productId);
 
             if (shoppingCartItem == null)
@@ -55,34 +55,36 @@ namespace BookStoreMVC.Services
             }
 
             shoppingCartItem.quantity = quantity;
-            _unitOfWork.UserProductShoppingCart.Update(shoppingCartItem);
+            _unitOfWork.CartItem.Update(shoppingCartItem);
             _unitOfWork.Save();
             return new ServiceResult() { Success = true, Message = "Cart updated" };
         }
 
-        public ServiceResult PlaceOrder(Cart cart)
+        public ServiceResult PlaceOrder(SummaryVM summaryVM)
         {
+
             Order order = new Order
             {
                 OrderId = Guid.NewGuid().ToString(),
-                UserId = cart.UserId,
+                UserId = summaryVM.Cart.UserId,
                 Date = DateTime.Now,
                 Status = Constants.OrderStatus.Pending,
+                StreetAddress = summaryVM.StreetAddress,
+                City = summaryVM.City,
+                State = summaryVM.State,
+                PostalCode = summaryVM.PostalCode,
+                PhoneNumber = summaryVM.PhoneNumber
             };
 
-            order.Items = cart.Items.Select(item => new OrderItem
+            order.Items = summaryVM.Cart.Items.Select(item => new OrderItem
             {
                 ProductId = item.productId,
                 Quantity = item.quantity,
                 Price = item.Product.Price
-            }).ToList();
+            });
 
             _unitOfWork.Order.Add(order);
-
-            foreach (ShoppingCartItem item in cart.Items)
-            {
-                _unitOfWork.UserProductShoppingCart.Remove(item);
-            }
+            _unitOfWork.ShoppingCart.ClearCart(summaryVM.Cart.UserId);
             _unitOfWork.Save();
             return new ServiceResult() { Success = true, Message = "Order has been placed successfully." };
         }

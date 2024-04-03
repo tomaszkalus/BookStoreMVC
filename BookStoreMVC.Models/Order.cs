@@ -20,5 +20,12 @@ namespace BookStoreMVC.Models
         public decimal Vat { get => Subtotal - (Subtotal / (1 + Constants.Prices.Vat)); set => _ = value; }
         public decimal Shipping { get => Subtotal == 0 ? 0 : Constants.Prices.Shipping; set => _ = value; }
         public decimal Total { get => Subtotal + Shipping; set => _ = value; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
     }
 }

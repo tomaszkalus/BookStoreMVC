@@ -24,5 +24,9 @@ namespace BookStoreMVC.DataAccess.Repository
             order.Status = orderStatus;
             _db.Orders.Update(order);
         }
+        public Order GetOrder(int orderId)
+        {
+            return _db.Orders.FirstOrDefault(o => o.Id == orderId);
+        }
     }
 }

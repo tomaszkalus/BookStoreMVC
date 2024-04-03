@@ -7,5 +7,6 @@ namespace BookStoreMVC.DataAccess.Repository.IRepository
     {
         public void Update(Order order);
         public void UpdateStatus(Order order, OrderStatus orderStatus);
+        public Order GetOrder(int orderId);
     }
 }

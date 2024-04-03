@@ -26,40 +26,46 @@ namespace BookStoreMVC.Areas.Customer.Controllers
         public IActionResult Index()
         {
             string userId = _userManager.GetUserId(User);
-            Cart cartVM = new Cart()
-            {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
-            };
-
-            return View(cartVM);
+            Cart cart = _unitOfWork.ShoppingCart.GetCart(userId);
+            return View(cart);
         }
 
         public IActionResult Summary()
         {
-
-            ApplicationUser user = _userManager.GetUserAsync(User).Result;
             string userId = _userManager.GetUserId(User);
-            Cart cartVM = new Cart()
-            {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
-            };
-
-
+            Cart cart = _unitOfWork.ShoppingCart.GetCart(userId);
+            ApplicationUser user = _userManager.GetUserAsync(User).Result;
+            
             SummaryVM summaryVM = new SummaryVM()
             {
-                Cart = cartVM,
-                User = user
+                Cart = cart,
+                StreetAddress = user.StreetAddress ?? "",
+                City = user.City ?? "",
+                State = user.State ?? "",
+                PostalCode = user.PostalCode ?? "",
+                PhoneNumber = user.PhoneNumber ?? ""
             };
             return View(summaryVM);
         }
 
         [HttpPost]
-        public IActionResult PlaceOrder()
+        public async Task<IActionResult> PlaceOrder(SummaryVM summaryVM)
         {
-            string userId = _userManager.GetUserId(User);
-            Cart cart = _unitOfWork.ShoppingCart.GetCart(userId);
+            ApplicationUser user = _userManager.GetUserAsync(User).Result;
+            Cart cart = _unitOfWork.ShoppingCart.GetCart(user.Id);
 
-            ServiceResult result = _cartService.PlaceOrder(cart);
+            if (summaryVM.RememberAddress)
+            {
+                user.State = summaryVM.State;
+                user.City = summaryVM.City;
+                user.StreetAddress = summaryVM.StreetAddress;
+                user.PostalCode = summaryVM.PostalCode;
+                user.PhoneNumber = summaryVM.PhoneNumber;
+                _userManager.UpdateAsync(user);
+            }
+
+            summaryVM.Cart = cart;
+            ServiceResult result = _cartService.PlaceOrder(summaryVM);
             if (result.Success == false)
             {
                 TempData["error"] = "Error while placing order!";
@@ -67,7 +73,13 @@ namespace BookStoreMVC.Areas.Customer.Controllers
             }
             
             TempData["success"] = "Order has been placed successfully!";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ShoppingCart", "OrderSummary");
+        }
+
+        public IActionResult OrderSummary(int id)
+        {
+            Order order = _unitOfWork.Order.GetOrder(id);
+            return View(order);
         }
     }
 }

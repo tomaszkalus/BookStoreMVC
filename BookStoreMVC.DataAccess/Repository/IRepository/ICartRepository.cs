@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookStoreMVC.DataAccess.Repository.IRepository
 {
-    public interface IShoppingCartRepository
+    public interface ICartRepository
     {
+        void ClearCart(string userId);
         public Cart GetCart(string userId);
 
     }

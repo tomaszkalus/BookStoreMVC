@@ -1,0 +1,10 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Order summary";
+}
+
+<h1 class="mt-3">@ViewData["Title"]</h1>
+<hr />
+
+<h1>Your order was placed successfully.</h1>
+<h2 class="fw-bold">Order number: @Model.OrderId</h2>

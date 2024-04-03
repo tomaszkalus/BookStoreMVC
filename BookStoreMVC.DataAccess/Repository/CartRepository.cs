@@ -2,25 +2,19 @@
 using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStoreMVC.DataAccess.Repository
 {
-    public class ShoppingCartRepository : Repository<ShoppingCartItem>, IShoppingCartRepository
+    public class CartRepository : Repository<ShoppingCartItem>, ICartRepository
     {
         private readonly ApplicationDbContext _db;
-        public ShoppingCartRepository(ApplicationDbContext db) : base(db)
+        public CartRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
         public Cart GetCart(string userId)
         {
-            // Product is not present in the ShoppingCartItem class.
             IEnumerable<ShoppingCartItem> items = _db.UserProductShoppingCarts.Where(u => u.userId == userId)
                 .Include(u => u.Product)
                 .Where(u => u.userId == userId);
@@ -31,6 +25,12 @@ namespace BookStoreMVC.DataAccess.Repository
                 UserId = userId
             };
             return cart;
+        }
+
+        public void ClearCart(string userId)
+        {
+            IEnumerable<ShoppingCartItem> items = _db.UserProductShoppingCarts.Where(u => u.userId == userId);
+            _db.UserProductShoppingCarts.RemoveRange(items);
         }
     }
 }

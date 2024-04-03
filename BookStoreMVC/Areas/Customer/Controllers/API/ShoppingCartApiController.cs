@@ -33,7 +33,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             string? userId = _userManager.GetUserId(HttpContext.User);
             Cart cartVM = new Cart
             {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+                Items = _unitOfWork.CartItem.GetByUserId(userId)
             };
             CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
             return Ok(JSend.Success(cartDTO));
@@ -48,7 +48,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
                 return NotFound(JSend.Fail("Product does not exist"));
             }
             string? userId = _userManager.GetUserId(HttpContext.User);
-            ShoppingCartItem? shoppingCartItem = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            ShoppingCartItem? shoppingCartItem = _unitOfWork.CartItem.GetByUserId(userId)
                 .FirstOrDefault(p => p.productId == productId);
 
             if (shoppingCartItem == null)
@@ -75,7 +75,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
 
             Cart cartVM = new Cart
             {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+                Items = _unitOfWork.CartItem.GetByUserId(userId)
             };
             CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
 
@@ -95,7 +95,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             }
             Cart cartVM = new Cart
             {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+                Items = _unitOfWork.CartItem.GetByUserId(userId)
             };
             CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
             return Ok(JSend.Success(cartDTO));
@@ -113,7 +113,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
             }
 
             string? userId = _userManager.GetUserId(HttpContext.User);
-            ShoppingCartItem? shoppingCartItem = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+            ShoppingCartItem? shoppingCartItem = _unitOfWork.CartItem.GetByUserId(userId)
                 .FirstOrDefault(p => p.productId == id);
 
             if (shoppingCartItem == null)
@@ -121,12 +121,12 @@ namespace BookStoreMVC.Areas.Customer.Controllers.API
                 return NotFound(JSend.Fail("Item is not present in the cart"));
             }
 
-            _unitOfWork.UserProductShoppingCart.Remove(shoppingCartItem);
+            _unitOfWork.CartItem.Remove(shoppingCartItem);
             _unitOfWork.Save();
 
             Cart cartVM = new Cart
             {
-                Items = _unitOfWork.UserProductShoppingCart.GetByUserId(userId)
+                Items = _unitOfWork.CartItem.GetByUserId(userId)
             };
             CartDTO cartDTO = ShoppingCartMapper.MapToDto(cartVM);
             return Ok(JSend.Success(cartDTO));
