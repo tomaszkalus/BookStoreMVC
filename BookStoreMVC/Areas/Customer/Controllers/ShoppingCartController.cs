@@ -73,13 +73,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers
             }
             
             TempData["success"] = "Order has been placed successfully!";
-            return RedirectToAction("ShoppingCart", "OrderSummary");
-        }
-
-        public IActionResult OrderSummary(int id)
-        {
-            Order order = _unitOfWork.Order.GetOrder(id);
-            return View(order);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

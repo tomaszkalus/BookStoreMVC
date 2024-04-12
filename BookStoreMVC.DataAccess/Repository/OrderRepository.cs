@@ -2,6 +2,7 @@
 using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using BookStoreMVC.Utility;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreMVC.DataAccess.Repository
 {
@@ -27,6 +28,21 @@ namespace BookStoreMVC.DataAccess.Repository
         public Order GetOrder(int orderId)
         {
             return _db.Orders.FirstOrDefault(o => o.Id == orderId);
+        }
+
+        public IEnumerable<Order> GetAllUserOrders(string userId)
+        {
+            var orders = _db.Orders
+                .Where(o => o.UserId == userId)
+                .ToList();
+            foreach (var order in orders)
+            {
+                order.Items = _db.OrderItems
+                    .Where(oi => oi.OrderId == order.Id)
+                    .ToList();
+            }
+
+            return orders;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace BookStoreMVC.Services
                 ProductId = item.productId,
                 Quantity = item.quantity,
                 Price = item.Product.Price
-            });
+            }).ToList();
 
             _unitOfWork.Order.Add(order);
             _unitOfWork.ShoppingCart.ClearCart(summaryVM.Cart.UserId);

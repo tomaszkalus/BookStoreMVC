@@ -1,0 +1,35 @@
+﻿@page
+@model BookStoreMVC.Areas.Customer.Views.YourOrdersModel
+@{
+}
+
+<h1>Your orders</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order number</th>
+                    <th>Order date</th>
+                    <th>Order total</th>
+                    <th>Order status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.orders)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>@order.Date</td>
+                        <td>@order.Total</td>
+                        <td>@order.Status</td>
+                        <td>
+                            <a  class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
