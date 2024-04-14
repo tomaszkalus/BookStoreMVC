@@ -1,4 +1,5 @@
 ﻿using BookStoreMVC.Utility;
+using Microsoft.Extensions.Hosting;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,7 +14,7 @@ namespace BookStoreMVC.Models
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
-        public ICollection <OrderItem> Items { get; set; }
+        public ICollection <OrderItem> Items { get; } = new List<OrderItem>();
         public DateTime Date { get; set; }
         public Constants.OrderStatus Status { get; set; }
         public decimal Subtotal { get => Items.Sum(x => x.Price * x.Quantity); set => _ = value; } 

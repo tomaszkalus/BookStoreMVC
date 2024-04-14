@@ -3,27 +3,33 @@ using BookStoreMVC.Models;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BookStoreMVC.Areas.Customer.Views
+namespace BookStoreMVC.Areas.Customer.Pages
 {
     [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
-    public class YourOrdersModel : PageModel
+    public class OrderModel : PageModel
     {
-        public IEnumerable<Order> orders;
+        public Order order;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public YourOrdersModel(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        public OrderModel(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
-
         }
-        public void OnGet()
+
+        public IActionResult OnGet(int id)
         {
             string userId = _userManager.GetUserId(User);
-            orders = _unitOfWork.Order.GetAllUserOrders(userId);
+            order = _unitOfWork.Order.GetOrder(id);
+            if(order == null || order.UserId != userId)
+            {
+                return RedirectToPage("/Index");
+            }
+            return Page();
         }
     }
 }

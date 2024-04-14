@@ -11,8 +11,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using BookStoreMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using BookStoreMVC.Middleware;
+using Microsoft.AspNetCore.Authentication.Certificate;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate();
 
 var cultureInfo = new CultureInfo("en-US");
 cultureInfo.NumberFormat.CurrencySymbol = "€";

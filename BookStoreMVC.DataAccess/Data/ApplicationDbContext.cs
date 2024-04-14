@@ -79,8 +79,17 @@ namespace BookStoreMVC.DataAccess.Data
                 new Category { Id = 4, Name = "Sci-Fi", DisplayOrder = 4 }
                 );
 
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(e => e.Product)
+                .WithMany()
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.Items)
+                .WithOne(e => e.Order)
+                .HasForeignKey(e => e.OrderId)
+                .IsRequired();
 
             modelBuilder.Entity<Product>()
                .HasOne(p => p.Category)

@@ -1,6 +1,7 @@
 ﻿using BookStoreMVC.DataAccess.Data;
 using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreMVC.DataAccess.Repository
 {
@@ -12,32 +13,11 @@ namespace BookStoreMVC.DataAccess.Repository
             _db = db;
         }
 
-        public Product? GetById(int id)
+        public OrderItem? GetById(int id)
         {
-            return _db.Products.FirstOrDefault(p => p.Id == id);
-        }
-
-        public void Update(Product product)
-        {
-            _db.Products.Update(product);
-            Product productFromDb = _db.Products.FirstOrDefault(p => p.Id == product.Id);
-            if (productFromDb != null)
-            {
-                productFromDb.Title = product.Title;
-                productFromDb.Description = product.Description;
-                productFromDb.ListPrice = product.ListPrice;
-                productFromDb.Price = product.Price;
-                productFromDb.Price50 = product.Price50;
-                productFromDb.Price100 = product.Price100;
-                productFromDb.CategoryId = product.CategoryId;
-                productFromDb.Author = product.Author;
-                productFromDb.ISBN = product.ISBN;
-
-                if (product.ImageUrl != null)
-                {
-                    productFromDb.ImageUrl = product.ImageUrl;
-                }
-            }
+            return _db.OrderItems
+                .Include(p => p.Product)
+                .FirstOrDefault(p => p.Id == id);
         }
     }
 }

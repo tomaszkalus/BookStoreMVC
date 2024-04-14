@@ -1,35 +1,50 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model BookStoreMVC.Areas.Customer.Views.YourOrdersModel
 @{
+    Layout = "_Layout";
 }
 
 <h1>Your orders</h1>
 <hr />
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Order number</th>
-                    <th>Order date</th>
-                    <th>Order total</th>
-                    <th>Order status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var order in Model.orders)
-                {
+
+@if (!Model.orders.Any())
+{
+    <p>You have no orders yet.</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@order.OrderId</td>
-                        <td>@order.Date</td>
-                        <td>@order.Total</td>
-                        <td>@order.Status</td>
-                        <td>
-                            <a  class="btn btn-primary">Details</a>
-                        </td>
+                        <th>Order ID</th>
+                        <th>Order date</th>
+                        <th>Number of items</th>
+                        <th>Order total</th>
+                        <th>Order status</th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.orders)
+                    {
+                        <tr>
+                            <td>@order.OrderId</td>
+                            <td>@order.Date</td>
+                            <td>@order.Items.Count()</td>
+                            <td>@order.Total.ToString("c")</td>
+                            <td>@order.Status</td>
+                            <td>
+                                <a asp-page="/Order" asp-route-id="@order.Id" class="">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
+}
+
+

@@ -62,7 +62,6 @@ namespace BookStoreMVC.Services
 
         public ServiceResult PlaceOrder(SummaryVM summaryVM)
         {
-
             Order order = new Order
             {
                 OrderId = Guid.NewGuid().ToString(),
@@ -73,15 +72,18 @@ namespace BookStoreMVC.Services
                 City = summaryVM.City,
                 State = summaryVM.State,
                 PostalCode = summaryVM.PostalCode,
-                PhoneNumber = summaryVM.PhoneNumber
+                PhoneNumber = summaryVM.PhoneNumber,
             };
 
-            order.Items = summaryVM.Cart.Items.Select(item => new OrderItem
+            foreach(var item in summaryVM.Cart.Items)
             {
-                ProductId = item.productId,
-                Quantity = item.quantity,
-                Price = item.Product.Price
-            }).ToList();
+                order.Items.Add(new OrderItem()
+                {
+                    ProductId = item.productId,
+                    Quantity = item.quantity,
+                    Price = item.Product.Price
+                });
+            }
 
             _unitOfWork.Order.Add(order);
             _unitOfWork.ShoppingCart.ClearCart(summaryVM.Cart.UserId);

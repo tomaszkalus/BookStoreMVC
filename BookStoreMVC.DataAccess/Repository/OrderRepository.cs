@@ -27,20 +27,18 @@ namespace BookStoreMVC.DataAccess.Repository
         }
         public Order GetOrder(int orderId)
         {
-            return _db.Orders.FirstOrDefault(o => o.Id == orderId);
+            return _db.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefault(o => o.Id == orderId);
         }
 
         public IEnumerable<Order> GetAllUserOrders(string userId)
         {
             var orders = _db.Orders
                 .Where(o => o.UserId == userId)
+                .Include(o => o.Items)
                 .ToList();
-            foreach (var order in orders)
-            {
-                order.Items = _db.OrderItems
-                    .Where(oi => oi.OrderId == order.Id)
-                    .ToList();
-            }
 
             return orders;
         }
