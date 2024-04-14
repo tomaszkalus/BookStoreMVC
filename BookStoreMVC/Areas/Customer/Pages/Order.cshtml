@@ -2,9 +2,10 @@
 @model BookStoreMVC.Areas.Customer.Pages.OrderModel
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Order details";
 }
 
-<h1>Order details</h1>
+<h1>@ViewData["Title"]</h1>
 <hr />
 
 <span>Order id: <strong>@Model.order.OrderId</strong></span>
@@ -42,18 +43,20 @@
         }
     </tbody>
 </table>
-<div>
-    <h3>Summary:</h3>
-    <div class="d-flex flex-columns justify-content-between">
-        <span>Subtotal:</span><span id="subtotal">@Model.order.Subtotal.ToString("c")</span>
+<h3>Summary:</h3>
+<div class="container row">
+    <div class="col-md-2 col-6 px-0">
+        <span>Subtotal:</span><br />
+        <span>VAT (@(BookStoreMVC.Utility.Constants.Prices.Vat * 100)%):</span><br />
+        <span>Shipping:</span><br />
+        <span class="fw-bold">Total:</span>
     </div>
-    <div class="d-flex flex-columns justify-content-between">
-        <span>VAT (@(BookStoreMVC.Utility.Constants.Prices.Vat * 100)%):</span><span id="vat">@Model.order.Vat.ToString("c")</span>
+    <div class="col-md-2 col-6">
+        <span>@Model.order.Subtotal.ToString("c")</span><br />
+        <span>@Model.order.Vat.ToString("c")</span><br />
+        <span>@Model.order.Shipping.ToString("c")</span><br />
+        <span class="fw-bold">@Model.order.Total.ToString("c")</span
     </div>
-    <div class="d-flex flex-columns justify-content-between">
-        <span>Shipping:</span><span id="shipping">@Model.order.Shipping.ToString("c")</span>
-    </div>
-    <div class="d-flex flex-columns justify-content-between">
-        <span class="fw-bold">Total:</span><span id="total">@Model.order.Total.ToString("c")</span>
-    </div>
+    
+
 </div>

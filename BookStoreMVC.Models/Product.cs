@@ -17,11 +17,6 @@ namespace BookStoreMVC.Models
         public string? Author { get; set; }
 
         [Required]
-        [Display(Name = "List Price")]
-        [Range(1, 1000)]
-        public decimal ListPrice { get; set; }
-
-        [Required]
         [Display(Name = "Price for 1-50")]
         [Range(1, 1000)]
         public decimal Price { get; set; }
@@ -49,8 +44,11 @@ namespace BookStoreMVC.Models
             set => imageUrl = value;
         }
 
+        [Display(Name = "New")]
         public bool IsNew { get; set; }
+        [Display(Name = "Bestseller")]
         public bool IsBestseller { get; set; }
+        [Display(Name = "Special Offer")]
         public bool IsSpecialOffer { get; set; }
 
 

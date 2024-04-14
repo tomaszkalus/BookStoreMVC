@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "zfgVnYB0zNDPPoTjsnRdl6F3BNjmtu6GhZ8cDC79D75fatAZhvBW15JHHvKZOyaGjwGSXkZiIUtFEihqFZrwog==",
+  "dgSpecHash": "zVQRBI3KC7pHLdPOv/Bg+E+yQARPWWv16lOtTGN6DPGYH2X/5p0aTqn0270CmqAybltasUyZqtQpIm86bnKYew==",
   "success": true,
   "projectFilePath": "C:\\Users\\tomas\\source\\repos\\BookStoreMVC\\BookStoreMVC.DataAccess\\BookStoreMVC.DataAccess.csproj",
   "expectedPackageFiles": [
@@ -99,6 +99,7 @@
     "C:\\Users\\tomas\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\tomas\\.nuget\\packages\\sixlabors.imagesharp\\3.1.4\\sixlabors.imagesharp.3.1.4.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

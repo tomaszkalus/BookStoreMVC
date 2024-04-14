@@ -57,11 +57,5 @@ namespace BookStoreMVC.Areas.Customer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        [HttpPost]
-        public IActionResult AddToShoppingCart(int productId)
-        {
-            return Json(new { success = true, message = "Adding to cart Successful!" });
-        }
     }
 }

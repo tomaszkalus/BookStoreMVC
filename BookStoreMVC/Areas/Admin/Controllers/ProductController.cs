@@ -1,10 +1,12 @@
 ﻿using BookStoreMVC.DataAccess.Repository.IRepository;
 using BookStoreMVC.Models;
 using BookStoreMVC.Models.ViewModels;
+using BookStoreMVC.Services;
 using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SixLabors.ImageSharp;
 
 namespace BookStoreMVC.Areas.Admin.Controllers
 {
@@ -14,18 +16,20 @@ namespace BookStoreMVC.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly IImageService _imageService;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IImageService imageService)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
         public IActionResult Index()
         {
-            List<Product> products = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
             return View(products);
         }
-        public IActionResult Upsert(int? id) 
+        public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new()
             {
@@ -36,7 +40,7 @@ namespace BookStoreMVC.Areas.Admin.Controllers
                 }),
                 Product = new Product(),
             };
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 // create
                 return View(productVM);
@@ -52,35 +56,24 @@ namespace BookStoreMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                if (file != null)
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                    string productPath = Path.Combine(wwwRootPath, @"images\product\");
+                    _imageService.DeleteIfExists(wwwRootPath, productVM.Product.ImageUrl);
+
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"images\product");
-
-                    // if product image is not specified
-                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
-                    {
-                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-
-                        if(System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-
-                    }
-
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
-
                     }
                     productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
-                if(productVM.Product.Id == 0)
+                if (productVM.Product.Id == 0)
                 {
                     _unitOfWork.Product.Add(productVM.Product);
                 }
@@ -90,7 +83,9 @@ namespace BookStoreMVC.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-                TempData["success"] = "Product added successfully";
+                TempData["success"] = productVM.Product.Id == 0
+                    ? "Product added successfully"
+                    : "Product updated successfully";
                 return RedirectToAction("index");
             }
             else
@@ -117,7 +112,7 @@ namespace BookStoreMVC.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }

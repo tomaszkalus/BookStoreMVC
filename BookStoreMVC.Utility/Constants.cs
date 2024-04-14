@@ -1,4 +1,6 @@
-﻿namespace BookStoreMVC.Utility
+﻿using Microsoft.Extensions.Hosting;
+
+namespace BookStoreMVC.Utility
 {
     public static class Constants
     {
@@ -16,5 +18,10 @@
             Completed,
             Cancelled
         }
+
+        public static int ImageWidth = 390;
+        public static int ImageHeight = 595;
+        public static int ImageMaxSizeKB = 500; 
+        public static string ImageExtension = ".jpg";
     }
 }

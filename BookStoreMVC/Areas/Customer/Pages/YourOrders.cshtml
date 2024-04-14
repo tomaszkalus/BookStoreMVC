@@ -3,9 +3,10 @@
 @model BookStoreMVC.Areas.Customer.Views.YourOrdersModel
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Your orders";
 }
 
-<h1>Your orders</h1>
+<h1>@ViewData["Title"]</h1>
 <hr />
 
 @if (!Model.orders.Any())

@@ -25,7 +25,6 @@ namespace BookStoreMVC.DataAccess.Repository
             {
                 productFromDb.Title = product.Title;
                 productFromDb.Description = product.Description;
-                productFromDb.ListPrice = product.ListPrice;
                 productFromDb.Price = product.Price;
                 productFromDb.Price50 = product.Price50;
                 productFromDb.Price100 = product.Price100;

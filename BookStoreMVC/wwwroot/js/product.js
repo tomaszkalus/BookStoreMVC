@@ -6,7 +6,6 @@ function loadDataTable() {
             { data: 'author', "width": "15%" },
             { data: 'title', "width": "15%" },
             { data: 'isbn', "width": "10%" },
-            { data: 'listPrice', "width": "5%" },
             { data: 'price', "width": "5%" },
             { data: 'price50', "width": "10%" },
             { data: 'price100', "width": "10%" },

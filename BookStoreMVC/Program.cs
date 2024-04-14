@@ -40,33 +40,6 @@ builder.Services.ConfigureApplicationCookie(o =>
     o.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
-
-
-//builder.Services.ConfigureApplicationCookie(o =>
-//{
-//    o.Events = new CookieAuthenticationEvents()
-//    {
-//        OnRedirectToLogin = (ctx) =>
-//        {
-//            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
-//            {
-//                ctx.Response.StatusCode = 401;
-//            }
-
-//            return Task.CompletedTask;
-//        },
-//        OnRedirectToAccessDenied = (ctx) =>
-//        {
-//            if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
-//            {
-//                ctx.Response.StatusCode = 403;
-//            }
-
-//            return Task.CompletedTask;
-//        }
-//    };
-//});
-
 builder.Services.Configure<ApiBehaviorOptions>(o =>
 {
     o.InvalidModelStateResponseFactory = actionContext =>
@@ -88,6 +61,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddSingleton<IImageService, ImageService>();
 
 var app = builder.Build();
 
