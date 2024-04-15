@@ -96,21 +96,30 @@
                         <div class="col-md-3">
                             <div class="input-group mb-3">
                                 <span class="input-group-text bg-primary text-white border-0 fw-semibold"
-                                        id="inputGroup-sizing-default">
+                                      id="inputGroup-sizing-default">
                                     Count
                                 </span>
                                 <input min="0" max="1000" type="number" value="1" class="form-control" id="quantity-@Model.Id"
-                                        aria-label="Quantity input" aria-describedby="inputGroup-sizing-default" />
+                                       aria-label="Quantity input" aria-describedby="inputGroup-sizing-default" />
                             </div>
                         </div>
                         <div class="col-md-6 pb-1">
-                            <button class="btn btn-primary w-100 text-uppercase fw-semibold shopping-cart-btn" data-id="@Model.Id">
-                                Add to Cart
-                            </button>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <button class="btn btn-primary w-100 text-uppercase fw-semibold shopping-cart-btn" data-id="@Model.Id">
+                                    Add to Cart
+                                </button>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary w-100 text-uppercase fw-semibold shopping-cart-btn"
+                                   asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path">
+                                    Add to Cart
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ namespace BookStoreMVC.Models.ViewModels
     public class SummaryVM
     {
         public Cart Cart { get; set; }
-        //public ApplicationUser User { get; set; }
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }

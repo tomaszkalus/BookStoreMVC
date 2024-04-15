@@ -1,17 +1,15 @@
 using BookStoreMVC.DataAccess.Data;
 using BookStoreMVC.DataAccess.Repository;
 using BookStoreMVC.DataAccess.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using BookStoreMVC.Utility;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using BookStoreMVC.Models;
-using System.Globalization;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using BookStoreMVC.Services;
-using Microsoft.AspNetCore.Mvc;
-using BookStoreMVC.Middleware;
+using BookStoreMVC.Utility;
 using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +25,7 @@ CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
@@ -57,7 +55,7 @@ builder.Services.Configure<ApiBehaviorOptions>(o =>
     };
 });
 
-builder.Services.AddRazorPages(); 
+builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddTransient<ICartService, CartService>();
@@ -83,8 +81,14 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
+    name: "area",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+
 app.UseStatusCodePagesWithRedirects("/Error/{0}"); //point to error page
 app.Run();

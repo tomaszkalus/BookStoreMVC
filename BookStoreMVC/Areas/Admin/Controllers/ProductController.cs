@@ -61,10 +61,8 @@ namespace BookStoreMVC.Areas.Admin.Controllers
                 if (file != null)
                 {
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
-
                     string productPath = Path.Combine(wwwRootPath, @"images\product\");
                     _imageService.DeleteIfExists(wwwRootPath, productVM.Product.ImageUrl);
-
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
@@ -97,8 +95,6 @@ namespace BookStoreMVC.Areas.Admin.Controllers
                 });
                 return View(productVM);
             }
-
-
         }
 
         #region API_CALLS

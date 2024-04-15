@@ -38,13 +38,6 @@
             </div>
 
             <div class="form-floating mb-3">
-                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                    <option selected disabled >Select a role</option>
-
-                </select>
-            </div>
-
-            <div class="form-floating mb-3">
                 <input asp-for="Input.StreetAddress" class="form-control" aria-required="false" />
                 <label asp-for="Input.StreetAddress"></label>
                 <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>

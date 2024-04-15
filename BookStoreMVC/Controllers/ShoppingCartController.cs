@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookStoreMVC.Areas.Customer.Controllers
+namespace BookStoreMVC.Controllers
 {
     [Authorize(Roles = SD.Role_Cust + "," + SD.Role_Admin)]
-    [Area("Customer")]
     public class ShoppingCartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -35,7 +34,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers
             string userId = _userManager.GetUserId(User);
             Cart cart = _unitOfWork.ShoppingCart.GetCart(userId);
             ApplicationUser user = _userManager.GetUserAsync(User).Result;
-            
+
             SummaryVM summaryVM = new SummaryVM()
             {
                 Cart = cart,
@@ -71,7 +70,7 @@ namespace BookStoreMVC.Areas.Customer.Controllers
                 TempData["error"] = "Error while placing order!";
                 return RedirectToAction("Summary");
             }
-            
+
             TempData["success"] = "Order has been placed successfully!";
             return RedirectToAction("Index", "Home");
         }
